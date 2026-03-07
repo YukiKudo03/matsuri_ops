@@ -38,10 +38,55 @@ custom classes must fully style the input
 
 ### UI/UX & design guidelines
 
-- **Produce world-class UI designs** with a focus on usability, aesthetics, and modern design principles
-- Implement **subtle micro-interactions** (e.g., button hover effects, and smooth transitions)
-- Ensure **clean typography, spacing, and layout balance** for a refined, premium look
-- Focus on **delightful details** like hover effects, loading states, and smooth page transitions
+#### ターゲットユーザー
+ITツールに不慣れな層を想定。親しみやすく、分かりやすいデザインを最優先とする。
+
+#### デザイン原則
+
+**1. Apple Human Interface Guidelines準拠（簡略化版）**
+| 原則 | 実装方針 |
+|------|----------|
+| 明瞭性 | 大きめのタップターゲット(44px以上)、明確なコントラスト |
+| 従順性 | コンテンツ優先、UIは控えめに |
+| 一貫性 | 統一されたアイコン、色、間隔 |
+| フィードバック | 全てのアクションに視覚的応答 |
+
+**2. 桜井政博氏ゲームデザイン原則**
+| 原則 | 実装方針 |
+|------|----------|
+| 触り心地の良さ | ボタン押下時の即座の反応（60ms以内） |
+| 結果の可視化 | アクション完了を明確に伝えるアニメーション |
+| 予測可能性 | ホバー状態で次の動作を予告 |
+| 心地よいリズム | イージング曲線の統一（ease-out基調） |
+| 過度な演出の排除 | 必要最小限、2秒以内で完結 |
+
+#### 必須要件
+- **タッチターゲット**: 最小44px（`min-h-[44px] min-w-[44px]`）
+- **ボタン押下反応**: 60ms以内（`--duration-instant: 60ms`）
+- **アニメーション**: 2秒以内で完結
+- **イージング**: ease-out基調で統一（`--ease-responsive`, `--ease-gentle`）
+- **フォーカス状態**: リング表示で明確化
+- **角丸**: 親しみやすさのため`rounded-lg`以上を使用
+
+#### カラーパレット
+- **プライマリ**: 落ち着いた橙（玄蕃まつりの提灯イメージ）
+- **セカンダリ**: 落ち着いた藍色（伝統的な日本色）
+- **アクセント**: 柔らかい緑（自然、安心感）
+- **ベース**: 温かみのあるオフホワイト
+
+#### CSS変数（`app.css`で定義済み）
+```css
+--duration-instant: 60ms;     /* 即座の反応 */
+--duration-quick: 150ms;      /* 素早い遷移 */
+--duration-normal: 300ms;     /* 通常の遷移 */
+--ease-responsive: cubic-bezier(0.2, 0, 0, 1);
+--ease-bounce-light: cubic-bezier(0.34, 1.2, 0.64, 1);
+--touch-target-min: 44px;
+```
+
+#### アクセシビリティ
+- `prefers-reduced-motion` に対応
+- WCAG 2.1 AA基準のコントラスト比（4.5:1以上）を維持
 
 
 <!-- phoenix-gen-auth-start -->

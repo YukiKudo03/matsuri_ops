@@ -1,14 +1,23 @@
 import Config
 
 # Configure your database
-config :matsuri_ops, MatsuriOps.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "matsuri_ops_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# Use DATABASE_URL if available (Docker), otherwise use localhost
+if database_url = System.get_env("DATABASE_URL") do
+  config :matsuri_ops, MatsuriOps.Repo,
+    url: database_url,
+    stacktrace: true,
+    show_sensitive_data_on_connection_error: true,
+    pool_size: 10
+else
+  config :matsuri_ops, MatsuriOps.Repo,
+    username: "postgres",
+    password: "postgres",
+    hostname: "localhost",
+    database: "matsuri_ops_dev",
+    stacktrace: true,
+    show_sensitive_data_on_connection_error: true,
+    pool_size: 10
+end
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -17,9 +26,9 @@ config :matsuri_ops, MatsuriOps.Repo,
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
 config :matsuri_ops, MatsuriOpsWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}],
+  # Binding to all interfaces for Docker access
+  # For local development only, change to `ip: {127, 0, 0, 1}` if not using Docker
+  http: [ip: {0, 0, 0, 0}],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -58,12 +67,12 @@ config :matsuri_ops, MatsuriOpsWeb.Endpoint,
     web_console_logger: true,
     patterns: [
       # Static assets, except user uploads
-      ~r"priv/static/(?!uploads/).*\.(js|css|png|jpeg|jpg|gif|svg)$"E,
+      ~r"priv/static/(?!uploads/).*\.(js|css|png|jpeg|jpg|gif|svg)$",
       # Gettext translations
-      ~r"priv/gettext/.*\.po$"E,
+      ~r"priv/gettext/.*\.po$",
       # Router, Controllers, LiveViews and LiveComponents
-      ~r"lib/matsuri_ops_web/router\.ex$"E,
-      ~r"lib/matsuri_ops_web/(controllers|live|components)/.*\.(ex|heex)$"E
+      ~r"lib/matsuri_ops_web/router\.ex$",
+      ~r"lib/matsuri_ops_web/(controllers|live|components)/.*\.(ex|heex)$"
     ]
   ]
 

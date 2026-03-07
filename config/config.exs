@@ -67,6 +67,9 @@ config :phoenix, :json_library, Jason
 # Configure Swoosh mailer
 config :matsuri_ops, MatsuriOps.Mailer, adapter: Swoosh.Adapters.Local
 
+# Use Finch as the Swoosh API client (instead of hackney)
+config :swoosh, :api_client, Swoosh.ApiClient.Finch
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

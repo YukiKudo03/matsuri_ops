@@ -59,20 +59,28 @@ defmodule MatsuriOpsWeb.CoreComponents do
       class="toast toast-top toast-end z-50"
       {@rest}
     >
+      <%!-- 桜井式: スライドインアニメーション + 軽いバウンスで結果を可視化 --%>
       <div class={[
         "alert w-80 sm:w-96 max-w-80 sm:max-w-96 text-wrap",
-        @kind == :info && "alert-info",
-        @kind == :error && "alert-error"
+        "flash-notification shadow-lg",
+        "rounded-xl border-l-4",
+        @kind == :info && "alert-info border-l-info",
+        @kind == :error && "alert-error border-l-error"
       ]}>
-        <.icon :if={@kind == :info} name="hero-information-circle" class="size-5 shrink-0" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle" class="size-5 shrink-0" />
+        <.icon :if={@kind == :info} name="hero-information-circle" class="size-6 shrink-0" />
+        <.icon :if={@kind == :error} name="hero-exclamation-circle" class="size-6 shrink-0" />
         <div>
-          <p :if={@title} class="font-semibold">{@title}</p>
-          <p>{msg}</p>
+          <p :if={@title} class="font-semibold text-base">{@title}</p>
+          <p class="text-sm">{msg}</p>
         </div>
         <div class="flex-1" />
-        <button type="button" class="group self-start cursor-pointer" aria-label={gettext("close")}>
-          <.icon name="hero-x-mark" class="size-5 opacity-40 group-hover:opacity-70" />
+        <%!-- Apple HIG: 44pxタッチターゲット --%>
+        <button
+          type="button"
+          class="group self-start cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2"
+          aria-label={gettext("close")}
+        >
+          <.icon name="hero-x-mark" class="size-5 opacity-50 group-hover:opacity-80 transition-opacity" />
         </button>
       </div>
     </div>
@@ -82,6 +90,10 @@ defmodule MatsuriOpsWeb.CoreComponents do
   @doc """
   Renders a button with navigation support.
 
+  Designed following:
+  - Apple HIG: 44px minimum touch target for accessibility
+  - 桜井式: Instant feedback (60ms) on press, gentle hover preview
+
   ## Examples
 
       <.button>Send!</.button>
@@ -90,16 +102,32 @@ defmodule MatsuriOpsWeb.CoreComponents do
   """
   attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
   attr :class, :any
-  attr :variant, :string, values: ~w(primary outline)
+  attr :variant, :string, values: ~w(primary outline success danger)
   slot :inner_block, required: true
 
   def button(%{rest: rest} = assigns) do
-    variants = %{"primary" => "btn-primary", "outline" => "btn-outline", nil => "btn-primary btn-soft"}
+    # デザインバリエーション: 親しみやすさを保ちつつ明確な区別
+    variants = %{
+      "primary" => "btn-primary",
+      "outline" => "btn-outline",
+      "success" => "btn-success",
+      "danger" => "btn-error",
+      nil => "btn-primary btn-soft"
+    }
+
+    # Apple HIG + 桜井式インタラクションのクラス
+    base_classes = [
+      "btn",
+      "min-h-[44px] min-w-[44px]",           # Apple HIG: タッチターゲット
+      "px-5 py-2.5",                          # 十分なパディング
+      "rounded-lg",                           # 親しみやすい角丸
+      "font-medium text-base",                # 読みやすいテキスト
+      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50",  # Apple HIG: 明確なフォーカス
+      Map.fetch!(variants, assigns[:variant])
+    ]
 
     assigns =
-      assign_new(assigns, :class, fn ->
-        ["btn", Map.fetch!(variants, assigns[:variant])]
-      end)
+      assign_new(assigns, :class, fn -> base_classes end)
 
     if rest[:href] || rest[:navigate] || rest[:patch] do
       ~H"""

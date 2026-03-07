@@ -21,71 +21,87 @@
   curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js
   We ship with two themes, a light one inspired on Phoenix colors and a dark one inspired
   on Elixir colors. Build your own at: https://daisyui.com/theme-generator/ */
+/* ダークテーマ: 落ち着いた夜空 + 温かみのあるアクセント */
 @plugin "../vendor/daisyui-theme" {
   name: "dark";
   default: false;
   prefersdark: true;
   color-scheme: "dark";
-  --color-base-100: oklch(30.33% 0.016 252.42);
-  --color-base-200: oklch(25.26% 0.014 253.1);
-  --color-base-300: oklch(20.15% 0.012 254.09);
-  --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: oklch(58% 0.233 277.117);
-  --color-primary-content: oklch(96% 0.018 272.314);
-  --color-secondary: oklch(58% 0.233 277.117);
-  --color-secondary-content: oklch(96% 0.018 272.314);
-  --color-accent: oklch(60% 0.25 292.717);
-  --color-accent-content: oklch(96% 0.016 293.756);
-  --color-neutral: oklch(37% 0.044 257.287);
-  --color-neutral-content: oklch(98% 0.003 247.858);
-  --color-info: oklch(58% 0.158 241.966);
-  --color-info-content: oklch(97% 0.013 236.62);
-  --color-success: oklch(60% 0.118 184.704);
-  --color-success-content: oklch(98% 0.014 180.72);
-  --color-warning: oklch(66% 0.179 58.318);
-  --color-warning-content: oklch(98% 0.022 95.277);
-  --color-error: oklch(58% 0.253 17.585);
-  --color-error-content: oklch(96% 0.015 12.422);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.21875rem;
-  --size-field: 0.21875rem;
+  /* ベースカラー: 落ち着いた紺（夜の祭り） */
+  --color-base-100: oklch(22% 0.02 265);
+  --color-base-200: oklch(18% 0.018 265);
+  --color-base-300: oklch(15% 0.015 265);
+  --color-base-content: oklch(95% 0.01 80);
+  /* プライマリ: 明るい橙（提灯の灯り） */
+  --color-primary: oklch(72% 0.16 50);
+  --color-primary-content: oklch(20% 0.02 50);
+  /* セカンダリ: 柔らかい藍 */
+  --color-secondary: oklch(65% 0.10 255);
+  --color-secondary-content: oklch(15% 0.01 255);
+  /* アクセント: 明るい緑 */
+  --color-accent: oklch(70% 0.14 155);
+  --color-accent-content: oklch(15% 0.01 155);
+  /* ニュートラル */
+  --color-neutral: oklch(35% 0.02 265);
+  --color-neutral-content: oklch(95% 0.005 265);
+  /* 機能色 */
+  --color-info: oklch(68% 0.14 245);
+  --color-info-content: oklch(15% 0.01 245);
+  --color-success: oklch(72% 0.14 150);
+  --color-success-content: oklch(15% 0.01 150);
+  --color-warning: oklch(78% 0.14 75);
+  --color-warning-content: oklch(20% 0.02 75);
+  --color-error: oklch(68% 0.18 25);
+  --color-error-content: oklch(15% 0.01 25);
+  /* 角丸: ライトテーマと統一 */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
   --border: 1.5px;
   --depth: 1;
   --noise: 0;
 }
 
+/* ライトテーマ: 祭りの温かみ + 落ち着いた信頼感 */
 @plugin "../vendor/daisyui-theme" {
   name: "light";
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(98% 0 0);
-  --color-base-200: oklch(96% 0.001 286.375);
-  --color-base-300: oklch(92% 0.004 286.32);
-  --color-base-content: oklch(21% 0.006 285.885);
-  --color-primary: oklch(70% 0.213 47.604);
-  --color-primary-content: oklch(98% 0.016 73.684);
-  --color-secondary: oklch(55% 0.027 264.364);
-  --color-secondary-content: oklch(98% 0.002 247.839);
-  --color-accent: oklch(0% 0 0);
-  --color-accent-content: oklch(100% 0 0);
-  --color-neutral: oklch(44% 0.017 285.786);
-  --color-neutral-content: oklch(98% 0 0);
-  --color-info: oklch(62% 0.214 259.815);
-  --color-info-content: oklch(97% 0.014 254.604);
-  --color-success: oklch(70% 0.14 182.503);
-  --color-success-content: oklch(98% 0.014 180.72);
-  --color-warning: oklch(66% 0.179 58.318);
-  --color-warning-content: oklch(98% 0.022 95.277);
-  --color-error: oklch(58% 0.253 17.585);
-  --color-error-content: oklch(96% 0.015 12.422);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.21875rem;
-  --size-field: 0.21875rem;
+  /* ベースカラー: 温かみのあるオフホワイト */
+  --color-base-100: oklch(98.5% 0.005 85);
+  --color-base-200: oklch(95.5% 0.008 80);
+  --color-base-300: oklch(91% 0.012 75);
+  --color-base-content: oklch(25% 0.015 50);
+  /* プライマリ: 落ち着いた橙（玄蕃まつりの提灯イメージ） */
+  --color-primary: oklch(62% 0.16 42);
+  --color-primary-content: oklch(98% 0.01 50);
+  /* セカンダリ: 落ち着いた藍色（伝統的な日本色） */
+  --color-secondary: oklch(50% 0.08 255);
+  --color-secondary-content: oklch(98% 0.005 250);
+  /* アクセント: 柔らかい緑（自然、安心感） */
+  --color-accent: oklch(58% 0.12 155);
+  --color-accent-content: oklch(98% 0.01 155);
+  /* ニュートラル: 温かみのあるグレー */
+  --color-neutral: oklch(45% 0.02 60);
+  --color-neutral-content: oklch(98% 0.005 60);
+  /* 機能色: 親しみやすく明確 */
+  --color-info: oklch(60% 0.15 245);
+  --color-info-content: oklch(97% 0.01 245);
+  --color-success: oklch(68% 0.14 150);
+  --color-success-content: oklch(98% 0.01 150);
+  --color-warning: oklch(72% 0.16 75);
+  --color-warning-content: oklch(25% 0.02 75);
+  --color-error: oklch(60% 0.20 25);
+  --color-error-content: oklch(97% 0.01 25);
+  /* 角丸: 親しみやすさ */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
   --border: 1.5px;
   --depth: 1;
   --noise: 0;
@@ -103,3 +119,143 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+
+/* =============================================================================
+   MatsuriOps カスタムデザインシステム
+   - Apple HIG準拠（簡略化版）
+   - 桜井政博氏ゲームデザイン原則
+   ============================================================================= */
+
+@layer base {
+  :root {
+    /* タイミング変数（桜井式 - 触り心地の良さ） */
+    --duration-instant: 60ms;    /* 即座の反応 - ボタン押下など */
+    --duration-quick: 150ms;     /* 素早い遷移 - ホバー状態 */
+    --duration-normal: 300ms;    /* 通常の遷移 - モーダル、通知 */
+    --duration-slow: 500ms;      /* ゆったりした遷移 - ページ遷移 */
+
+    /* イージング変数（桜井式 - 心地よいリズム） */
+    --ease-responsive: cubic-bezier(0.2, 0, 0, 1);     /* 素早く始まり滑らかに終わる */
+    --ease-bounce-light: cubic-bezier(0.34, 1.2, 0.64, 1); /* 軽いバウンス */
+    --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);       /* 穏やかな動き */
+
+    /* タッチターゲット（Apple HIG - 明瞭性） */
+    --touch-target-min: 44px;
+
+    /* 角丸（親しみやすさ - 先鋭化しすぎない） */
+    --radius-friendly: 12px;
+    --radius-button: 8px;
+    --radius-card: 16px;
+
+    /* 間隔（Apple HIG - 一貫性） */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+  }
+}
+
+/* カスタムアニメーション定義（桜井式 - 結果の可視化） */
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px oklch(70% 0.14 145 / 0.3);
+  }
+}
+
+@keyframes gentleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ボタン強化スタイル（桜井式インタラクション） */
+.btn {
+  min-height: var(--touch-target-min);
+  transition: transform var(--duration-instant) var(--ease-responsive),
+              box-shadow var(--duration-quick) var(--ease-gentle),
+              background-color var(--duration-quick) var(--ease-gentle);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px oklch(0% 0 0 / 0.15);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97) translateY(0);
+  transition-duration: var(--duration-instant);
+}
+
+/* フォーカス状態強化（Apple HIG - フィードバック） */
+.btn:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-offset: 2px;
+  ring-color: oklch(62% 0.16 40 / 0.5);
+}
+
+/* フラッシュ通知アニメーション */
+.flash-notification {
+  animation: slideInRight var(--duration-normal) var(--ease-bounce-light);
+}
+
+/* カード・コンテナのホバー効果 */
+.card-interactive {
+  transition: transform var(--duration-quick) var(--ease-gentle),
+              box-shadow var(--duration-quick) var(--ease-gentle);
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px oklch(0% 0 0 / 0.1);
+}
+
+/* モーションを好まないユーザー向け（Apple HIG - アクセシビリティ） */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
