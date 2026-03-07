@@ -290,8 +290,8 @@
 |----|--------|-------------|--------|------|------|
 | TD-001 | 未使用aliasの削除 | 🔵 REFACTOR | 低 | 🔲 未着手 | コンパイル警告対応 |
 | T-TD-002 | 既存コードのテスト追加 | 🔴 RED | 高 | 🔲 未着手 | カバレッジ80%目標 |
-| T-TD-003 | E2Eテスト追加 | 🔴 RED | 中 | 🔲 未着手 | Wallaby検討 |
-| I-TD-003 | E2Eテスト環境構築 | 🟢 GREEN | 中 | 🔲 未着手 | |
+| T-TD-003 | E2Eテスト追加 | 🔴 RED | 中 | ✅ 完了 | Wallaby導入 |
+| I-TD-003 | E2Eテスト環境構築 | 🟢 GREEN | 中 | ✅ 完了 | feature_case.ex作成 |
 | TD-004 | パフォーマンス最適化 | 🔵 REFACTOR | 低 | 🔲 未着手 | N+1クエリ対策 |
 | T-TD-005 | アクセシビリティテスト | 🔴 RED | 中 | 🔲 未着手 | WCAG 2.1 AA |
 | I-TD-005 | アクセシビリティ対応 | 🟢 GREEN | 中 | 🔲 未着手 | |
@@ -301,6 +301,8 @@
 ---
 
 ## 8. テスト実行コマンド
+
+### 8.1 ユニットテスト・統合テスト
 
 ```bash
 # 全テスト実行
@@ -317,6 +319,53 @@ mix test --failed
 
 # ウォッチモード（ファイル変更時に自動実行）
 mix test.watch
+```
+
+### 8.2 E2Eテスト
+
+**前提条件**: ChromeDriverがインストールされていること
+
+```bash
+# ChromeDriverインストール（macOS）
+brew install chromedriver
+
+# E2Eテストのみ実行
+mix test test/features/
+
+# 特定のE2Eテスト実行
+mix test test/features/authentication_test.exs
+
+# ヘッドレスモード無効（ブラウザ表示）
+# config/test.exs の chromedriver.headless を false に変更
+
+# スクリーンショット確認
+ls tmp/wallaby_screenshots/
+```
+
+### 8.3 E2Eテスト構成
+
+| ファイル | テスト対象 |
+|----------|-----------|
+| `test/features/authentication_test.exs` | 認証フロー（登録、ログイン、ログアウト） |
+| `test/features/festival_management_test.exs` | 祭り管理（CRUD、ナビゲーション） |
+| `test/features/operations_dashboard_test.exs` | 運営ダッシュボード（インシデント、エリア、リアルタイム） |
+
+### 8.4 E2Eテスト作成ガイド
+
+```elixir
+# test/features/example_test.exs
+defmodule MatsuriOpsWeb.Features.ExampleTest do
+  use MatsuriOpsWeb.FeatureCase, async: true
+
+  feature "ユーザーが操作を完了できる", %{session: session} do
+    session
+    |> visit("/path")
+    |> fill_in(css("input[name='field']"), with: "値")
+    |> click(button("ボタン"))
+    |> wait_for_liveview()
+    |> assert_has(css(".success", text: "完了"))
+  end
+end
 ```
 
 ---
@@ -350,3 +399,4 @@ mix test.watch
 - GitHub Issues: https://github.com/YukiKudo03/matsuri_ops/issues
 - [ExUnit Documentation](https://hexdocs.pm/ex_unit/ExUnit.html)
 - [Phoenix Testing Guide](https://hexdocs.pm/phoenix/testing.html)
+- [Wallaby E2E Testing](https://hexdocs.pm/wallaby/readme.html)

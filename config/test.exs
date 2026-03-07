@@ -36,3 +36,16 @@ config :phoenix_live_view,
 # Sort query params output of verified routes for robust url comparisons
 config :phoenix,
   sort_verified_routes_query_params: true
+
+# Wallaby E2E test configuration
+config :wallaby,
+  driver: Wallaby.Chrome,
+  chromedriver: [
+    headless: true
+  ],
+  screenshot_on_failure: true,
+  screenshot_dir: "tmp/wallaby_screenshots"
+
+# Enable server for E2E tests (Wallaby needs a running server)
+config :matsuri_ops, MatsuriOpsWeb.Endpoint,
+  server: true
