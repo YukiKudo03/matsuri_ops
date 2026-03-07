@@ -1,0 +1,40 @@
+FROM elixir:1.17-slim
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    inotify-tools \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install hex + rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Set environment
+ENV MIX_ENV=dev
+
+# Copy mix files
+COPY mix.exs mix.lock ./
+
+# Install dependencies
+RUN mix deps.get
+
+# Copy config files
+COPY config config
+
+# Copy the rest of the application
+COPY . .
+
+# Compile dependencies
+RUN mix deps.compile
+
+# Expose port
+EXPOSE 4000
+
+# Default command
+CMD ["mix", "phx.server"]
