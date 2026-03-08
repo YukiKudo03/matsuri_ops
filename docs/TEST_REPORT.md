@@ -1,21 +1,21 @@
 # MatsuriOps テストレポート
 
-**生成日時**: 2026-03-08 16:25:56
+**生成日時**: 2026-03-08 16:42:36
 **Elixir/Phoenix バージョン**: Phoenix 1.8.5 / Elixir 1.18
-**テスト実行時間**: 4.3秒
+**テスト実行時間**: 5.7秒
 
 ---
 
 ## サマリー
 
-| 項目 | 値 |
-|------|-----|
-| **総テスト数** | 519 |
-| **成功** | 519 |
-| **失敗** | 0 |
-| **除外** | 8 |
-| **テストファイル数** | 49 |
-| **カバレッジ** | 46.82% |
+| 項目 | 値 | 前回比 |
+|------|-----|--------|
+| **総テスト数** | 629 | +110 |
+| **成功** | 629 | - |
+| **失敗** | 0 | - |
+| **除外** | 8 | - |
+| **テストファイル数** | 54 | +5 |
+| **カバレッジ** | 51.86% | +5.04% |
 
 ---
 
@@ -23,28 +23,31 @@
 
 ### 1. ビジネスロジックテスト (`test/matsuri_ops/`)
 
-| ファイル | 対象モジュール | 説明 |
-|----------|---------------|------|
-| `accounts_test.exs` | MatsuriOps.Accounts | ユーザー認証・アカウント管理 |
-| `advertising_test.exs` | MatsuriOps.Advertising | 広告バナー管理 |
-| `analytics_test.exs` | MatsuriOps.Analytics | 分析・統計機能 |
-| `cameras_test.exs` | MatsuriOps.Cameras | ライブカメラ連携 |
-| `chat_test.exs` | MatsuriOps.Chat | チャット機能 |
-| `documents_test.exs` | MatsuriOps.Documents | ドキュメント管理 |
-| `error_test.exs` | MatsuriOps.Error | エラーハンドリング |
-| `gallery_test.exs` | MatsuriOps.Gallery | フォトギャラリー |
-| `gantt_test.exs` | MatsuriOps.Gantt | ガントチャート |
-| `locations_test.exs` | MatsuriOps.Locations | 位置情報管理 |
-| `logger_test.exs` | MatsuriOps.Logger | ロギング機能 |
-| `native_test.exs` | MatsuriOps.Native | ネイティブ連携 |
-| `notifications_test.exs` | MatsuriOps.Notifications | 通知機能 |
-| `qr_codes_test.exs` | MatsuriOps.QRCodes | QRコード管理 |
-| `reports_test.exs` | MatsuriOps.Reports | レポート生成 |
-| `reports/pdf_export_test.exs` | MatsuriOps.Reports.PdfExport | PDF出力 |
-| `shifts_test.exs` | MatsuriOps.Shifts | シフト管理 |
-| `social_media_test.exs` | MatsuriOps.SocialMedia | SNS投稿管理 |
-| `sponsorships_test.exs` | MatsuriOps.Sponsorships | 協賛金管理 |
-| `templates_test.exs` | MatsuriOps.Templates | テンプレート機能 |
+| ファイル | 対象モジュール | 説明 | テスト数 |
+|----------|---------------|------|---------|
+| `accounts_test.exs` | MatsuriOps.Accounts | ユーザー認証・アカウント管理 | - |
+| `advertising_test.exs` | MatsuriOps.Advertising | 広告バナー管理 | - |
+| `analytics_test.exs` | MatsuriOps.Analytics | 分析・統計機能 | - |
+| `budgets_test.exs` | MatsuriOps.Budgets | 予算・経費・収入管理 | 37 |
+| `cameras_test.exs` | MatsuriOps.Cameras | ライブカメラ連携 | - |
+| `chat_test.exs` | MatsuriOps.Chat | チャット機能 | - |
+| `documents_test.exs` | MatsuriOps.Documents | ドキュメント管理 | - |
+| `error_test.exs` | MatsuriOps.Error | エラーハンドリング | - |
+| `festivals_test.exs` | MatsuriOps.Festivals | 祭り・メンバー管理 | 23 |
+| `gallery_test.exs` | MatsuriOps.Gallery | フォトギャラリー | - |
+| `gantt_test.exs` | MatsuriOps.Gantt | ガントチャート | - |
+| `locations_test.exs` | MatsuriOps.Locations | 位置情報管理 | - |
+| `logger_test.exs` | MatsuriOps.Logger | ロギング機能 | - |
+| `native_test.exs` | MatsuriOps.Native | ネイティブ連携 | - |
+| `notifications_test.exs` | MatsuriOps.Notifications | 通知機能 | - |
+| `qr_codes_test.exs` | MatsuriOps.QRCodes | QRコード管理 | - |
+| `reports_test.exs` | MatsuriOps.Reports | レポート生成 | - |
+| `reports/pdf_export_test.exs` | MatsuriOps.Reports.PdfExport | PDF出力 | - |
+| `shifts_test.exs` | MatsuriOps.Shifts | シフト管理 | - |
+| `social_media_test.exs` | MatsuriOps.SocialMedia | SNS投稿管理 | - |
+| `sponsorships_test.exs` | MatsuriOps.Sponsorships | 協賛金管理 | - |
+| `tasks_test.exs` | MatsuriOps.Tasks | タスク・チェックリスト管理 | 29 |
+| `templates_test.exs` | MatsuriOps.Templates | テンプレート機能 | - |
 
 ### 2. Web層テスト (`test/matsuri_ops_web/`)
 
@@ -72,6 +75,8 @@
 | `announcement_live/index_test.exs` | お知らせ一覧 | - |
 | `chat_live/index_test.exs` | チャット一覧 | - |
 | `document_live/index_test.exs` | ドキュメント一覧 | - |
+| `festival_live/form_component_test.exs` | 祭りフォーム | 10 |
+| `festival_live/show_test.exs` | 祭り詳細 | 13 |
 | `gantt_live/index_test.exs` | ガントチャート | - |
 | `help_live/index_test.exs` | ヘルプトップ | 12 |
 | `help_live/quickstart_test.exs` | クイックスタート | 13 |
@@ -102,11 +107,20 @@
 | `festival_management_test.exs` | 祭り管理 | 作成・編集・削除 |
 | `operations_dashboard_test.exs` | 運営ダッシュボード | 当日運営 |
 
+### 4. テストフィクスチャ (`test/support/fixtures/`)
+
+| ファイル | 提供関数 |
+|----------|---------|
+| `accounts_fixtures.ex` | user_fixture, user_scope_fixture |
+| `budgets_fixtures.ex` | budget_category_fixture, expense_fixture, income_fixture |
+| `festivals_fixtures.ex` | festival_fixture, festival_member_fixture |
+| `tasks_fixtures.ex` | task_category_fixture, task_fixture, checklist_item_fixture |
+
 ---
 
 ## カバレッジ詳細
 
-### 100%カバレッジモジュール
+### 高カバレッジモジュール（90%以上）
 
 | モジュール | カバレッジ |
 |-----------|-----------|
@@ -120,113 +134,159 @@
 | MatsuriOpsWeb.UserLive.Settings | 100.00% |
 | MatsuriOpsWeb.UserLive.Confirmation | 100.00% |
 | MatsuriOpsWeb.TemplateLive.Index | 100.00% |
-| MatsuriOpsWeb.PageController | 100.00% |
-| MatsuriOpsWeb.UserSessionController | 100.00% |
-| MatsuriOpsWeb.ErrorJSON | 100.00% |
 | MatsuriOps.Accounts.UserNotifier | 100.00% |
 | MatsuriOps.Templates | 100.00% |
 | MatsuriOps.Reports | 100.00% |
+| MatsuriOpsWeb.FestivalLive.Show | 94.64% |
+| MatsuriOps.Budgets | 94.44% |
+| MatsuriOpsWeb.GanttLive.Index | 94.12% |
+| MatsuriOps.Festivals | 93.10% |
+| MatsuriOps.Notifications | 91.30% |
+| MatsuriOps.Tasks | 90.91% |
+| MatsuriOps.QRCodes | 90.00% |
+
+### 今回改善されたモジュール
+
+| モジュール | 変更前 | 変更後 | 改善 |
+|-----------|--------|--------|------|
+| MatsuriOps.Tasks | 9.65% | 90.91% | +81.26% |
+| MatsuriOps.Festivals | 14.35% | 93.10% | +78.75% |
+| MatsuriOps.Budgets | 21.53% | 94.44% | +72.91% |
+| FestivalLive.Show | 11.11% | 94.64% | +83.53% |
+| FestivalLive.FormComponent | 4.30% | 81.58% | +77.28% |
 
 ### 改善が必要なモジュール（50%未満）
 
 | モジュール | カバレッジ |
 |-----------|-----------|
-| MatsuriOpsWeb.FestivalLive.FormComponent | 4.30% |
-| MatsuriOpsWeb.Presence | 7.69% |
-| MatsuriOps.Tasks | 9.65% |
-| MatsuriOpsWeb.FestivalLive.Show | 11.11% |
-| MatsuriOps.Festivals | 14.35% |
-| MatsuriOps.Budgets | 21.53% |
+| MatsuriOps.Operations | 0.00% |
+| MatsuriOpsWeb.BudgetLive.Index | 0.00% |
+| MatsuriOpsWeb.TaskLive.Index | 0.00% |
+| MatsuriOpsWeb.StaffLive.Index | 0.00% |
+| MatsuriOpsWeb.OperationsLive.Dashboard | 0.00% |
+| MatsuriOpsWeb.Router | 42.68% |
+| MatsuriOps.QRCodes.QRCode | 46.67% |
 
 ---
 
-## ヘルプページテスト詳細
+## 新規追加テスト詳細
 
-### HelpLive.Index（12テスト）
+### MatsuriOps.Festivals テスト（23テスト）
 
-- [x] ログイン時にヘルプトップページが表示される
-- [x] 未ログイン時にログインページへリダイレクトされる
-- [x] 全カテゴリカードが表示される
-- [x] FAQセクションが表示される
-- [x] サポートセクションが表示される
-- [x] 祭り一覧へのナビゲーションリンクがある
-- [x] 全サブページへのリンクがある
-- [x] クイックスタートページへ遷移できる
-- [x] 管理者マニュアルページへ遷移できる
-- [x] スタッフマニュアルページへ遷移できる
-- [x] 外部ユーザーガイドページへ遷移できる
+**祭り管理**
+- [x] list_festivals/0 で全祭りを取得
+- [x] list_festivals_by_status/1 でステータス別取得
+- [x] list_user_festivals/1 でユーザー別取得
+- [x] get_festival!/1 でID指定取得
+- [x] get_festival/1 でnil対応取得
+- [x] get_festival_with_members!/1 でメンバー付き取得
+- [x] create_festival/1 で祭り作成
+- [x] create_festival/2 でorganizer付き作成
+- [x] update_festival/2 で祭り更新
+- [x] delete_festival/1 で祭り削除
+- [x] change_festival/1 でchangeset取得
 
-### HelpLive.Quickstart（13テスト）
+**メンバー管理**
+- [x] list_festival_members/1 でメンバー一覧取得
+- [x] get_festival_member!/1 でメンバー取得
+- [x] get_festival_member/2 で祭り・ユーザー指定取得
+- [x] add_member_to_festival/1 でメンバー追加
+- [x] update_festival_member/2 でメンバー更新
+- [x] remove_member_from_festival/1 でメンバー削除
+- [x] member_of_festival?/2 でメンバー確認
 
-- [x] ログイン時にクイックスタートページが表示される
-- [x] 未ログイン時にログインページへリダイレクトされる
-- [x] MatsuriOps紹介セクションが表示される
-- [x] 対応環境が表示される
-- [x] Step 1: アカウント登録が表示される
-- [x] Step 2: プロフィール設定が表示される
-- [x] Step 3: 祭りに参加/作成が表示される
-- [x] 次のステップ（ロール別ガイド）が表示される
-- [x] トラブルシューティングセクションが表示される
-- [x] PWAインストール手順が表示される
-- [x] ヘルプトップへの戻るリンクがある
-- [x] 他マニュアルへのリンクがある
-- [x] ヘルプトップへ戻れる
+### MatsuriOps.Tasks テスト（29テスト）
 
-### HelpLive.Admin（15テスト）
+**タスクカテゴリ**
+- [x] list_task_categories/1 でカテゴリ一覧取得
+- [x] get_task_category!/1 でカテゴリ取得
+- [x] create_task_category/1 でカテゴリ作成
+- [x] update_task_category/2 でカテゴリ更新
+- [x] delete_task_category/1 でカテゴリ削除
 
-- [x] ログイン時に管理者マニュアルページが表示される
-- [x] 未ログイン時にログインページへリダイレクトされる
-- [x] 目次が表示される
-- [x] システム概要セクション（ユーザーロール）が表示される
-- [x] ユーザー管理セクションが表示される
-- [x] 祭り管理セクションが表示される
-- [x] タスク管理セクションが表示される
-- [x] 予算管理セクションが表示される
-- [x] シフト管理セクションが表示される
-- [x] 当日運営セクションが表示される
-- [x] レポート・分析セクションが表示される
-- [x] その他の機能セクションが表示される
-- [x] トラブルシューティングセクションが表示される
-- [x] ヘルプトップへの戻るリンクがある
-- [x] ヘルプトップへ戻れる
+**タスク**
+- [x] list_tasks/1 でタスク一覧取得
+- [x] list_tasks_by_category/2 でカテゴリ別取得
+- [x] list_tasks_by_assignee/2 で担当者別取得
+- [x] list_root_tasks/1 でルートタスク取得
+- [x] get_task!/1 でタスク取得
+- [x] get_task_with_children!/1 で子タスク付き取得
+- [x] create_task/1 でタスク作成
+- [x] update_task/2 でタスク更新
+- [x] delete_task/1 でタスク削除
 
-### HelpLive.Staff（18テスト）
+**タスク依存関係**
+- [x] list_task_dependencies/1 で依存関係取得
+- [x] create_task_dependency/1 で依存関係作成
+- [x] delete_task_dependency/1 で依存関係削除
 
-- [x] ログイン時にスタッフマニュアルページが表示される
-- [x] 未ログイン時にログインページへリダイレクトされる
-- [x] 目次が表示される
-- [x] ログインセクションが表示される
-- [x] タスクセクション（ステータス説明）が表示される
-- [x] 優先度の説明が表示される
-- [x] シフトセクションが表示される
-- [x] 当日操作セクションが表示される
-- [x] インシデント重大度ガイドが表示される
-- [x] 混雑度ガイドが表示される
-- [x] チャットセクションが表示される
-- [x] お知らせセクションが表示される
-- [x] ドキュメントセクションが表示される
-- [x] FAQセクションが表示される
-- [x] 緊急連絡先セクションが表示される
-- [x] ヘルプトップへの戻るリンクがある
-- [x] ヘルプトップへ戻れる
+**チェックリスト**
+- [x] list_checklist_items/1 でアイテム一覧取得
+- [x] get_checklist_item!/1 でアイテム取得
+- [x] create_checklist_item/1 でアイテム作成
+- [x] update_checklist_item/2 でアイテム更新
+- [x] delete_checklist_item/1 でアイテム削除
+- [x] toggle_checklist_item/2 で完了トグル（true）
+- [x] toggle_checklist_item/2 で完了トグル（false）
 
-### HelpLive.External（18テスト）
+### MatsuriOps.Budgets テスト（37テスト）
 
-- [x] ログイン時に外部ユーザーガイドページが表示される
-- [x] 未ログイン時にログインページへリダイレクトされる
-- [x] 目次が表示される
-- [x] アカウント登録セクションが表示される
-- [x] 祭り情報セクションが表示される
-- [x] お知らせ受信セクションが表示される
-- [x] 優先度レベルが表示される
-- [x] 連絡先セクションが表示される
-- [x] FAQセクションが表示される
-- [x] 出店者向け情報セクションが表示される
-- [x] 出店者準備ステップが表示される
-- [x] スマートフォン利用セクションが表示される
-- [x] PWAの利点が表示される
-- [x] ヘルプトップへの戻るリンクがある
-- [x] ヘルプトップへ戻れる
+**予算カテゴリ**
+- [x] list_budget_categories/1 でカテゴリ一覧取得
+- [x] get_budget_category!/1 でカテゴリ取得
+- [x] create_budget_category/1 でカテゴリ作成
+- [x] update_budget_category/2 でカテゴリ更新
+- [x] delete_budget_category/1 でカテゴリ削除
+
+**経費**
+- [x] list_expenses/1 で経費一覧取得
+- [x] list_expenses_by_category/2 でカテゴリ別取得
+- [x] list_expenses_by_status/2 でステータス別取得
+- [x] get_expense!/1 で経費取得
+- [x] create_expense/1 で経費作成
+- [x] update_expense/2 で経費更新
+- [x] approve_expense/2 で経費承認
+- [x] reject_expense/2 で経費却下
+- [x] delete_expense/1 で経費削除
+- [x] total_expenses/1 で承認済み経費合計
+- [x] total_expenses_by_category/1 でカテゴリ別合計
+
+**収入**
+- [x] list_incomes/1 で収入一覧取得
+- [x] list_incomes_by_status/2 でステータス別取得
+- [x] get_income!/1 で収入取得
+- [x] create_income/1 で収入作成
+- [x] update_income/2 で収入更新
+- [x] delete_income/1 で収入削除
+- [x] total_income/1 で受領済み収入合計
+
+**予算サマリー**
+- [x] budget_summary/1 で予算概要取得
+- [x] budget_summary/1 で空予算対応
+
+### FestivalLive テスト（23テスト）
+
+**Show ページ（13テスト）**
+- [x] 祭り詳細ページの表示
+- [x] 未ログイン時のリダイレクト
+- [x] 祭り情報の表示
+- [x] ナビゲーションボタンの表示
+- [x] メンバーリストの表示
+- [x] メンバーなし時のメッセージ
+- [x] タスクカテゴリの表示
+- [x] カテゴリなし時のメッセージ
+- [x] 戻るリンクの表示
+- [x] 各スケール表示の確認
+
+**FormComponent（10テスト）**
+- [x] 編集フォームの表示
+- [x] 既存値の表示
+- [x] バリデーションの確認
+- [x] 保存処理の確認
+- [x] 日本語ラベルの表示
+- [x] スケール選択肢の表示
+- [x] ステータス選択肢の表示
+- [x] モーダル閉じる機能
 
 ---
 
@@ -240,7 +300,12 @@ mix test
 mix test --cover
 
 # 特定ファイルのテスト
-mix test test/matsuri_ops_web/live/help_live/
+mix test test/matsuri_ops/festivals_test.exs
+mix test test/matsuri_ops/tasks_test.exs
+mix test test/matsuri_ops/budgets_test.exs
+
+# LiveViewテスト
+mix test test/matsuri_ops_web/live/festival_live/
 
 # 詳細出力
 mix test --trace
@@ -260,15 +325,6 @@ mix test --include feature
 # フィーチャーテストを含めて実行
 mix test --include feature
 ```
-
----
-
-## 警告事項
-
-テスト実行時に以下の警告が出力されます（機能には影響なし）：
-
-1. `unused variable` - 未使用変数（3件）
-2. `default values never used` - 未使用デフォルト値（3件）
 
 ---
 
