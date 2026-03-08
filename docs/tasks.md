@@ -5,7 +5,7 @@
 | 項目 | 内容 |
 |------|------|
 | 文書名 | タスク表 |
-| バージョン | 5.0 |
+| バージョン | 6.0 |
 | 作成日 | 2026年3月7日 |
 | 最終更新日 | 2026年3月8日 |
 | 開発手法 | TDD (Test-Driven Development) |
@@ -327,7 +327,43 @@
 
 ---
 
-## 7. 技術的負債・品質改善
+## 7. ドキュメント整備 (#17)
+
+| ID | タスク | 状態 | 備考 |
+|----|--------|------|------|
+| DOC-001 | クイックスタートガイド作成 | ✅ 完了 | docs/quickstart.md |
+| DOC-002 | 管理者マニュアル作成 | ✅ 完了 | docs/manual_admin.md |
+| DOC-003 | スタッフマニュアル作成 | ✅ 完了 | docs/manual_staff.md |
+| DOC-004 | 外部ユーザーガイド作成 | ✅ 完了 | docs/manual_external.md |
+| DOC-005 | スクリーンショット自動取得 | ✅ 完了 | Wallaby使用、18画面 |
+| DOC-006 | スクリーンショットガイド作成 | ✅ 完了 | docs/images/SCREENSHOT_GUIDE.md |
+
+### スクリーンショット一覧
+
+| ファイル | 画面 |
+|----------|------|
+| ss_login.png | ログイン画面 |
+| ss_register.png | 新規登録画面 |
+| ss_settings.png | 設定画面 |
+| ss_festival_list.png | 祭り一覧 |
+| ss_festival_form.png | 祭り作成フォーム |
+| ss_festival_show.png | 祭り詳細 |
+| ss_task_list.png | タスク一覧 |
+| ss_task_form.png | タスク作成フォーム |
+| ss_budget_dashboard.png | 予算ダッシュボード |
+| ss_expense_form.png | 経費登録フォーム |
+| ss_staff_list.png | スタッフ一覧 |
+| ss_shift_list.png | シフト一覧 |
+| ss_operations.png | 運営ダッシュボード |
+| ss_incident_form.png | インシデント報告フォーム |
+| ss_chat_room.png | チャットルーム |
+| ss_announcements.png | お知らせ一覧 |
+| ss_report.png | レポート画面 |
+| ss_gantt.png | ガントチャート |
+
+---
+
+## 8. 技術的負債・品質改善
 
 | ID | タスク | TDDフェーズ | 優先度 | 状態 | 備考 |
 |----|--------|-------------|--------|------|------|
@@ -343,9 +379,9 @@
 
 ---
 
-## 8. テスト実行コマンド
+## 9. テスト実行コマンド
 
-### 8.1 ユニットテスト・統合テスト
+### 9.1 ユニットテスト・統合テスト
 
 ```bash
 # 全テスト実行
@@ -364,7 +400,7 @@ mix test --failed
 mix test.watch
 ```
 
-### 8.2 E2Eテスト
+### 9.2 E2Eテスト
 
 **前提条件**: ChromeDriverがインストールされていること
 
@@ -385,7 +421,7 @@ mix test test/features/authentication_test.exs
 ls tmp/wallaby_screenshots/
 ```
 
-### 8.3 E2Eテスト構成
+### 9.3 E2Eテスト構成
 
 | ファイル | テスト対象 |
 |----------|-----------|
@@ -393,7 +429,7 @@ ls tmp/wallaby_screenshots/
 | `test/features/festival_management_test.exs` | 祭り管理（CRUD、ナビゲーション） |
 | `test/features/operations_dashboard_test.exs` | 運営ダッシュボード（インシデント、エリア、リアルタイム） |
 
-### 8.4 E2Eテスト作成ガイド
+### 9.4 E2Eテスト作成ガイド
 
 ```elixir
 # test/features/example_test.exs
@@ -413,7 +449,7 @@ end
 
 ---
 
-## 9. 凡例
+## 10. 凡例
 
 ### 状態
 
@@ -435,10 +471,14 @@ end
 
 ---
 
-## 10. 参照
+## 11. 参照
 
 - 要件定義書（docs/requirements.md）
 - 基本設計書（docs/basic_design.md）
+- クイックスタートガイド（docs/quickstart.md）
+- 管理者マニュアル（docs/manual_admin.md）
+- スタッフマニュアル（docs/manual_staff.md）
+- 外部ユーザーガイド（docs/manual_external.md）
 - GitHub Issues: https://github.com/YukiKudo03/matsuri_ops/issues
 - [ExUnit Documentation](https://hexdocs.pm/ex_unit/ExUnit.html)
 - [Phoenix Testing Guide](https://hexdocs.pm/phoenix/testing.html)
