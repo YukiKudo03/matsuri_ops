@@ -550,6 +550,9 @@ defmodule MatsuriOpsWeb.CoreComponents do
     <dialog
       id={@id}
       class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={"#{@id}-title"}
       phx-mounted={@show && show_modal(@id)}
       phx-remove={hide_modal(@id)}
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
@@ -563,7 +566,7 @@ defmodule MatsuriOpsWeb.CoreComponents do
       >
         <button
           type="button"
-          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 min-w-[44px] min-h-[44px]"
           aria-label={gettext("close")}
           phx-click={JS.exec("data-cancel", to: "##{@id}")}
         >

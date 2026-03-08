@@ -44,6 +44,7 @@ defmodule MatsuriOps.Budgets do
     Expense
     |> where([e], e.festival_id == ^festival_id)
     |> order_by([e], desc: e.expense_date)
+    |> preload([:category, :submitted_by])
     |> Repo.all()
   end
 

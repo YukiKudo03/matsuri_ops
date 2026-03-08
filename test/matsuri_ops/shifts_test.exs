@@ -45,7 +45,9 @@ defmodule MatsuriOps.ShiftsTest do
 
     test "list_shifts/1 returns all shifts for a festival", %{festival: festival} do
       shift = shift_fixture(festival)
-      assert Shifts.list_shifts(festival.id) == [shift]
+      [listed_shift] = Shifts.list_shifts(festival.id)
+      assert listed_shift.id == shift.id
+      assert listed_shift.name == shift.name
     end
 
     test "get_shift!/1 returns the shift with given id", %{festival: festival} do

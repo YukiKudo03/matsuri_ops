@@ -44,6 +44,7 @@ defmodule MatsuriOps.Tasks do
     Task
     |> where([t], t.festival_id == ^festival_id)
     |> order_by([t], [asc: t.sort_order, asc: t.inserted_at])
+    |> preload([:category, :assignee])
     |> Repo.all()
   end
 

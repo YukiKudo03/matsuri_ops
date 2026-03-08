@@ -18,6 +18,7 @@ defmodule MatsuriOps.Shifts do
     Shift
     |> where([s], s.festival_id == ^festival_id)
     |> order_by([s], asc: s.start_time)
+    |> preload(:assignments)
     |> Repo.all()
   end
 
