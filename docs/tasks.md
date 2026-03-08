@@ -201,70 +201,70 @@
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-DOC-001 | Documentスキーマテスト | 🔴 RED | 🔲 未着手 | |
-| I-DOC-001 | Documentスキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-DOC-002 | ファイルアップロードテスト | 🔴 RED | 🔲 未着手 | |
-| I-DOC-002 | ファイルアップロード実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-DOC-003 | バージョン管理テスト | 🔴 RED | 🔲 未着手 | |
-| I-DOC-003 | バージョン管理実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-DOC-004 | 検索機能テスト | 🔴 RED | 🔲 未着手 | |
-| I-DOC-004 | 検索機能実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-DOC-005 | 文書管理LiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-DOC-005 | 文書管理LiveView実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-DOC-001 | Documentスキーマテスト | 🔴 RED | ✅ 完了 | |
+| I-DOC-001 | Documentスキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-DOC-002 | ファイルアップロードテスト | 🔴 RED | ✅ 完了 | |
+| I-DOC-002 | ファイルアップロード実装 | 🟢 GREEN | ✅ 完了 | |
+| T-DOC-003 | バージョン管理テスト | 🔴 RED | ✅ 完了 | |
+| I-DOC-003 | バージョン管理実装 | 🟢 GREEN | ✅ 完了 | |
+| T-DOC-004 | 検索機能テスト | 🔴 RED | ✅ 完了 | |
+| I-DOC-004 | 検索機能実装 | 🟢 GREEN | ✅ 完了 | |
+| T-DOC-005 | 文書管理LiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-DOC-005 | 文書管理LiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | R-DOC-001 | 文書管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 5.2 プッシュ通知・お知らせ (#7)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-NOTIF-001 | Announcementスキーマテスト | 🔴 RED | 🔲 未着手 | |
-| I-NOTIF-001 | Announcementスキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-NOTIF-002 | Service Workerテスト | 🔴 RED | 🔲 未着手 | |
-| I-NOTIF-002 | Service Worker実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-NOTIF-003 | Web Push APIテスト | 🔴 RED | 🔲 未着手 | |
-| I-NOTIF-003 | Web Push API実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-NOTIF-004 | お知らせLiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-NOTIF-004 | お知らせLiveView実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-NOTIF-001 | Announcementスキーマテスト | 🔴 RED | ✅ 完了 | |
+| I-NOTIF-001 | Announcementスキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-NOTIF-002 | Service Workerテスト | 🔴 RED | ✅ 完了 | |
+| I-NOTIF-002 | Service Worker実装 | 🟢 GREEN | ✅ 完了 | |
+| T-NOTIF-003 | Web Push APIテスト | 🔴 RED | ✅ 完了 | |
+| I-NOTIF-003 | Web Push API実装 | 🟢 GREEN | ✅ 完了 | |
+| T-NOTIF-004 | お知らせLiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-NOTIF-004 | お知らせLiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | R-NOTIF-001 | 通知リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 5.3 シフト管理・配置図 (#8)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-SHIFT-001 | Shiftスキーマテスト | 🔴 RED | 🔲 未着手 | |
-| I-SHIFT-001 | Shiftスキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-SHIFT-002 | シフト割当ロジックテスト | 🔴 RED | 🔲 未着手 | 重複チェック |
-| I-SHIFT-002 | シフト割当ロジック実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-SHIFT-003 | シフト表LiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-SHIFT-003 | シフト表LiveView実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-SHIFT-004 | 配置図エディタテスト | 🔴 RED | 🔲 未着手 | |
-| I-SHIFT-004 | 配置図エディタ実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-SHIFT-001 | Shiftスキーマテスト | 🔴 RED | ✅ 完了 | |
+| I-SHIFT-001 | Shiftスキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-SHIFT-002 | シフト割当ロジックテスト | 🔴 RED | ✅ 完了 | 重複チェック |
+| I-SHIFT-002 | シフト割当ロジック実装 | 🟢 GREEN | ✅ 完了 | |
+| T-SHIFT-003 | シフト表LiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-SHIFT-003 | シフト表LiveView実装 | 🟢 GREEN | ✅ 完了 | |
+| T-SHIFT-004 | 配置図エディタテスト | 🔴 RED | ✅ 完了 | |
+| I-SHIFT-004 | 配置図エディタ実装 | 🟢 GREEN | ✅ 完了 | |
 | R-SHIFT-001 | シフト管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 5.4 ガントチャート表示 (#9)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-GANTT-001 | ガントチャートデータ変換テスト | 🔴 RED | 🔲 未着手 | |
-| I-GANTT-001 | ガントチャートデータ変換実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-GANTT-002 | 依存関係計算テスト | 🔴 RED | 🔲 未着手 | クリティカルパス |
-| I-GANTT-002 | 依存関係計算実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-GANTT-003 | ガントチャートLiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-GANTT-003 | ガントチャートLiveView実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-GANTT-001 | ガントチャートデータ変換テスト | 🔴 RED | ✅ 完了 | |
+| I-GANTT-001 | ガントチャートデータ変換実装 | 🟢 GREEN | ✅ 完了 | |
+| T-GANTT-002 | 依存関係計算テスト | 🔴 RED | ✅ 完了 | クリティカルパス |
+| I-GANTT-002 | 依存関係計算実装 | 🟢 GREEN | ✅ 完了 | |
+| T-GANTT-003 | ガントチャートLiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-GANTT-003 | ガントチャートLiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | R-GANTT-001 | ガントチャートリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 5.5 PWA対応 (#10)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-PWA-001 | Service Worker登録テスト | 🔴 RED | 🔲 未着手 | |
-| I-PWA-001 | Service Worker登録実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-PWA-002 | オフラインキャッシュテスト | 🔴 RED | 🔲 未着手 | |
-| I-PWA-002 | オフラインキャッシュ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-PWA-003 | マニフェストテスト | 🔴 RED | 🔲 未着手 | |
-| I-PWA-003 | マニフェスト実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-PWA-004 | Background Syncテスト | 🔴 RED | 🔲 未着手 | |
-| I-PWA-004 | Background Sync実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-PWA-001 | Service Worker登録テスト | 🔴 RED | ✅ 完了 | |
+| I-PWA-001 | Service Worker登録実装 | 🟢 GREEN | ✅ 完了 | |
+| T-PWA-002 | オフラインキャッシュテスト | 🔴 RED | ✅ 完了 | |
+| I-PWA-002 | オフラインキャッシュ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-PWA-003 | マニフェストテスト | 🔴 RED | ✅ 完了 | |
+| I-PWA-003 | マニフェスト実装 | 🟢 GREEN | ✅ 完了 | |
+| T-PWA-004 | Background Syncテスト | 🔴 RED | ✅ 完了 | |
+| I-PWA-004 | Background Sync実装 | 🟢 GREEN | ✅ 完了 | |
 | R-PWA-001 | PWAリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ---

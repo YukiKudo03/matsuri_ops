@@ -102,6 +102,25 @@ defmodule MatsuriOpsWeb.Router do
       # Location routes
       live "/festivals/:festival_id/locations", LocationLive.Index, :index
 
+      # Document routes
+      live "/festivals/:festival_id/documents", DocumentLive.Index, :index
+      live "/festivals/:festival_id/documents/new", DocumentLive.Index, :new
+      live "/festivals/:festival_id/documents/:id/edit", DocumentLive.Index, :edit
+      live "/festivals/:festival_id/documents/:id", DocumentLive.Show, :show
+
+      # Announcement routes
+      live "/festivals/:festival_id/announcements", AnnouncementLive.Index, :index
+      live "/festivals/:festival_id/announcements/new", AnnouncementLive.Index, :new
+      live "/festivals/:festival_id/announcements/:id/edit", AnnouncementLive.Index, :edit
+
+      # Shift routes
+      live "/festivals/:festival_id/shifts", ShiftLive.Index, :index
+      live "/festivals/:festival_id/shifts/new", ShiftLive.Index, :new
+      live "/festivals/:festival_id/shifts/:id/edit", ShiftLive.Index, :edit
+
+      # Gantt chart routes
+      live "/festivals/:festival_id/gantt", GanttLive.Index, :index
+
       # Template routes
       live "/templates", TemplateLive.Index, :index
       live "/templates/new", TemplateLive.Index, :new
