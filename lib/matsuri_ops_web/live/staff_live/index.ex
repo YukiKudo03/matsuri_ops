@@ -137,7 +137,11 @@ defmodule MatsuriOpsWeb.StaffLive.Index do
   end
 
   defp count_by_role(%Phoenix.LiveView.LiveStream{inserts: inserts}, role) do
-    Enum.count(inserts, fn {_dom_id, _order, member} -> member.role == role end)
+    Enum.count(inserts, fn
+      {_dom_id, _order, member, _a, _b} -> member.role == role
+      {_dom_id, _order, member} -> member.role == role
+      {_dom_id, member} -> member.role == role
+    end)
   end
 
   defp role_badge(assigns) do

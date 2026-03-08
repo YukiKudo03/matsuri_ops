@@ -49,7 +49,7 @@ defmodule MatsuriOpsWeb.TaskLive.Show do
       </div>
       <:subtitle>{@task.description}</:subtitle>
       <:actions>
-        <.link patch={~p"/festivals/#{@festival}/tasks/#{@task}/edit"} phx-click={JS.push_focus()}>
+        <.link patch={~p"/festivals/#{@festival}/tasks/#{@task}/show/edit"} phx-click={JS.push_focus()}>
           <.button>編集</.button>
         </.link>
       </:actions>

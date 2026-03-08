@@ -216,6 +216,7 @@ defmodule MatsuriOpsWeb.BudgetLive.Index do
         expense={@expense}
         festival={@festival}
         categories={@categories}
+        current_scope={@current_scope}
         patch={~p"/festivals/#{@festival}/budgets"}
       />
     </.modal>
