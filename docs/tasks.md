@@ -43,7 +43,7 @@
 | フェーズ | 状態 | テストカバレッジ目標 |
 |----------|------|---------------------|
 | Phase 1: MVP | ✅ 完了 | 80%以上 |
-| Phase 2: 拡張機能 | 🔲 未着手 | 80%以上 |
+| Phase 2: 拡張機能 | ✅ 完了 | 80%以上 |
 | Phase 3: 将来拡張 | 🔲 未着手 | 80%以上 |
 
 ---
@@ -157,40 +157,40 @@
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-CHAT-001 | Message/ChatRoomスキーマテスト | 🔴 RED | 🔲 未着手 | |
-| I-CHAT-001 | Message/ChatRoomスキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-CHAT-002 | Phoenix Channelsテスト | 🔴 RED | 🔲 未着手 | join, broadcast |
-| I-CHAT-002 | Phoenix Channels実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-CHAT-003 | 既読管理テスト | 🔴 RED | 🔲 未着手 | |
-| I-CHAT-003 | 既読管理実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-CHAT-004 | チャットLiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-CHAT-004 | チャットLiveView実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-CHAT-001 | Message/ChatRoomスキーマテスト | 🔴 RED | ✅ 完了 | |
+| I-CHAT-001 | Message/ChatRoomスキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-CHAT-002 | PubSubリアルタイム通知テスト | 🔴 RED | ✅ 完了 | broadcast |
+| I-CHAT-002 | PubSubリアルタイム通知実装 | 🟢 GREEN | ✅ 完了 | |
+| T-CHAT-003 | 既読管理テスト | 🔴 RED | ✅ 完了 | |
+| I-CHAT-003 | 既読管理実装 | 🟢 GREEN | ✅ 完了 | |
+| T-CHAT-004 | チャットLiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-CHAT-004 | チャットLiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | R-CHAT-001 | チャットリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 4.4 スタッフ位置表示 (#4)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-LOC-001 | 位置情報スキーマテスト | 🔴 RED | 🔲 未着手 | |
-| I-LOC-001 | 位置情報スキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-LOC-002 | Geolocation API連携テスト | 🔴 RED | 🔲 未着手 | モック使用 |
-| I-LOC-002 | Geolocation API連携実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-LOC-003 | リアルタイム位置更新テスト | 🔴 RED | 🔲 未着手 | PubSub |
-| I-LOC-003 | リアルタイム位置更新実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-LOC-004 | 会場マップLiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-LOC-004 | 会場マップLiveView実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-LOC-001 | 位置情報スキーマテスト | 🔴 RED | ✅ 完了 | |
+| I-LOC-001 | 位置情報スキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-LOC-002 | Geolocation API連携テスト | 🔴 RED | ✅ 完了 | モック使用 |
+| I-LOC-002 | Geolocation API連携実装 | 🟢 GREEN | ✅ 完了 | |
+| T-LOC-003 | リアルタイム位置更新テスト | 🔴 RED | ✅ 完了 | PubSub |
+| I-LOC-003 | リアルタイム位置更新実装 | 🟢 GREEN | ✅ 完了 | |
+| T-LOC-004 | 会場マップLiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-LOC-004 | 会場マップLiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | R-LOC-001 | 位置表示リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ### 4.5 ベトナム語対応 (#5)
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-I18N-001 | Gettext設定テスト | 🔴 RED | 🔲 未着手 | ロケール切替 |
-| I-I18N-001 | Gettext設定実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-I18N-002 | 翻訳ヘルパーテスト | 🔴 RED | 🔲 未着手 | |
-| I-I18N-002 | 翻訳ファイル作成 | 🟢 GREEN | 🔲 未着手 | ja, vi |
-| T-I18N-003 | 言語切替UIテスト | 🔴 RED | 🔲 未着手 | |
-| I-I18N-003 | 言語切替UI実装 | 🟢 GREEN | 🔲 未着手 | |
+| T-I18N-001 | Gettext設定テスト | 🔴 RED | ✅ 完了 | ロケール切替 |
+| I-I18N-001 | Gettext設定実装 | 🟢 GREEN | ✅ 完了 | |
+| T-I18N-002 | 翻訳ヘルパーテスト | 🔴 RED | ✅ 完了 | |
+| I-I18N-002 | 翻訳ファイル作成 | 🟢 GREEN | ✅ 完了 | ja, vi |
+| T-I18N-003 | 言語切替UIテスト | 🔴 RED | ✅ 完了 | |
+| I-I18N-003 | 言語切替UI実装 | 🟢 GREEN | ✅ 完了 | |
 | R-I18N-001 | 国際化リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
 
 ---

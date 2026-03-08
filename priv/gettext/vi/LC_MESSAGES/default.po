@@ -1,0 +1,119 @@
+## Vietnamese translations for MatsuriOps
+msgid ""
+msgstr ""
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+## Navigation
+msgid "Festival"
+msgstr "Lễ hội"
+
+msgid "Festivals"
+msgstr "Danh sách lễ hội"
+
+msgid "Festival Management"
+msgstr "Quản lý lễ hội"
+
+msgid "Dashboard"
+msgstr "Bảng điều khiển"
+
+msgid "Tasks"
+msgstr "Nhiệm vụ"
+
+msgid "Budget"
+msgstr "Ngân sách"
+
+msgid "Staff"
+msgstr "Nhân viên"
+
+msgid "Operations"
+msgstr "Vận hành"
+
+msgid "Reports"
+msgstr "Báo cáo"
+
+msgid "Chat"
+msgstr "Trò chuyện"
+
+msgid "Location"
+msgstr "Vị trí"
+
+msgid "Templates"
+msgstr "Mẫu"
+
+## Actions
+msgid "Create"
+msgstr "Tạo"
+
+msgid "Edit"
+msgstr "Sửa"
+
+msgid "Delete"
+msgstr "Xóa"
+
+msgid "Save"
+msgstr "Lưu"
+
+msgid "Cancel"
+msgstr "Hủy"
+
+msgid "Back"
+msgstr "Quay lại"
+
+msgid "Submit"
+msgstr "Gửi"
+
+## Status
+msgid "Planning"
+msgstr "Đang lên kế hoạch"
+
+msgid "Active"
+msgstr "Đang diễn ra"
+
+msgid "Completed"
+msgstr "Hoàn thành"
+
+msgid "Cancelled"
+msgstr "Đã hủy"
+
+## Auth
+msgid "Log in"
+msgstr "Đăng nhập"
+
+msgid "Log out"
+msgstr "Đăng xuất"
+
+msgid "Register"
+msgstr "Đăng ký"
+
+msgid "Settings"
+msgstr "Cài đặt"
+
+## Common
+msgid "Name"
+msgstr "Tên"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Description"
+msgstr "Mô tả"
+
+msgid "Date"
+msgstr "Ngày"
+
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "Amount"
+msgstr "Số tiền"
+
+## Language
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgid "Japanese"
+msgstr "Tiếng Nhật"
+
+msgid "Vietnamese"
+msgstr "Tiếng Việt"

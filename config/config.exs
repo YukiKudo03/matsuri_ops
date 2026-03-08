@@ -64,6 +64,11 @@ config :logger, :default_formatter,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configure Gettext
+config :matsuri_ops, MatsuriOpsWeb.Gettext,
+  default_locale: "ja",
+  locales: ~w(ja vi)
+
 # Configure Swoosh mailer
 config :matsuri_ops, MatsuriOps.Mailer, adapter: Swoosh.Adapters.Local
 

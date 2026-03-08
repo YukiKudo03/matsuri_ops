@@ -1,0 +1,119 @@
+## Japanese translations for MatsuriOps
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+## Navigation
+msgid "Festival"
+msgstr "祭り"
+
+msgid "Festivals"
+msgstr "祭り一覧"
+
+msgid "Festival Management"
+msgstr "祭り運営"
+
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+msgid "Tasks"
+msgstr "タスク"
+
+msgid "Budget"
+msgstr "予算"
+
+msgid "Staff"
+msgstr "スタッフ"
+
+msgid "Operations"
+msgstr "運営"
+
+msgid "Reports"
+msgstr "レポート"
+
+msgid "Chat"
+msgstr "チャット"
+
+msgid "Location"
+msgstr "位置"
+
+msgid "Templates"
+msgstr "テンプレート"
+
+## Actions
+msgid "Create"
+msgstr "作成"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Back"
+msgstr "戻る"
+
+msgid "Submit"
+msgstr "送信"
+
+## Status
+msgid "Planning"
+msgstr "企画中"
+
+msgid "Active"
+msgstr "開催中"
+
+msgid "Completed"
+msgstr "完了"
+
+msgid "Cancelled"
+msgstr "中止"
+
+## Auth
+msgid "Log in"
+msgstr "ログイン"
+
+msgid "Log out"
+msgstr "ログアウト"
+
+msgid "Register"
+msgstr "登録"
+
+msgid "Settings"
+msgstr "設定"
+
+## Common
+msgid "Name"
+msgstr "名前"
+
+msgid "Email"
+msgstr "メール"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Date"
+msgstr "日付"
+
+msgid "Status"
+msgstr "状態"
+
+msgid "Amount"
+msgstr "金額"
+
+## Language
+msgid "Language"
+msgstr "言語"
+
+msgid "Japanese"
+msgstr "日本語"
+
+msgid "Vietnamese"
+msgstr "ベトナム語"

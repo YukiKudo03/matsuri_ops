@@ -11,6 +11,7 @@ defmodule MatsuriOpsWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_user
+    plug MatsuriOpsWeb.Plugs.Locale
   end
 
   pipeline :api do
@@ -21,6 +22,7 @@ defmodule MatsuriOpsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/locale/:locale", LocaleController, :switch
   end
 
   # Other scopes may use custom stacks.
@@ -90,6 +92,15 @@ defmodule MatsuriOpsWeb.Router do
       # Report routes
       live "/festivals/:festival_id/reports", ReportLive.Index, :index
       live "/reports/compare", ReportLive.Compare, :compare
+
+      # Chat routes
+      live "/festivals/:festival_id/chat", ChatLive.Index, :index
+      live "/festivals/:festival_id/chat/new", ChatLive.Index, :new
+      live "/festivals/:festival_id/chat/:id", ChatLive.Room, :show
+      live "/festivals/:festival_id/chat/:id/edit", ChatLive.Index, :edit
+
+      # Location routes
+      live "/festivals/:festival_id/locations", LocationLive.Index, :index
 
       # Template routes
       live "/templates", TemplateLive.Index, :index
