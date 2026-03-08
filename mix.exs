@@ -67,7 +67,9 @@ defmodule MatsuriOps.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:swoosh, "~> 1.17"},
-      {:finch, "~> 0.19"}
+      {:finch, "~> 0.19"},
+      # QRコード生成
+      {:qr_code, "~> 3.1"}
     ]
   end
 

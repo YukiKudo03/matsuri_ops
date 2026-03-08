@@ -121,6 +121,32 @@ defmodule MatsuriOpsWeb.Router do
       # Gantt chart routes
       live "/festivals/:festival_id/gantt", GanttLive.Index, :index
 
+      # QR Code routes
+      live "/festivals/:festival_id/qr-codes", QRCodeLive.Index, :index
+      live "/festivals/:festival_id/qr-codes/new", QRCodeLive.Index, :new
+      live "/festivals/:festival_id/qr-codes/:id/edit", QRCodeLive.Index, :edit
+      live "/festivals/:festival_id/qr-codes/:id", QRCodeLive.Show, :show
+
+      # Ad Banner routes
+      live "/festivals/:festival_id/ad-banners", AdBannerLive.Index, :index
+      live "/festivals/:festival_id/ad-banners/new", AdBannerLive.Index, :new
+      live "/festivals/:festival_id/ad-banners/:id/edit", AdBannerLive.Index, :edit
+      live "/festivals/:festival_id/ad-banners/:id", AdBannerLive.Show, :show
+
+      # Gallery routes
+      live "/festivals/:festival_id/gallery", GalleryLive.Index, :index
+      live "/festivals/:festival_id/gallery/new", GalleryLive.Index, :new
+      live "/festivals/:festival_id/gallery/:id/edit", GalleryLive.Index, :edit
+      live "/festivals/:festival_id/gallery/:id", GalleryLive.Show, :show
+      live "/festivals/:festival_id/gallery/moderation", GalleryLive.Moderation, :moderation
+
+      # Social Media routes
+      live "/festivals/:festival_id/social", SocialMediaLive.Index, :index
+      live "/festivals/:festival_id/social/new", SocialMediaLive.Index, :new
+      live "/festivals/:festival_id/social/:id/edit", SocialMediaLive.Index, :edit
+      live "/festivals/:festival_id/social/:id", SocialMediaLive.Show, :show
+      live "/festivals/:festival_id/social/accounts", SocialMediaLive.Accounts, :accounts
+
       # Template routes
       live "/templates", TemplateLive.Index, :index
       live "/templates/new", TemplateLive.Index, :new
