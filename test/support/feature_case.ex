@@ -4,16 +4,26 @@ defmodule MatsuriOpsWeb.FeatureCase do
 
   Wallabyを使用したブラウザベースのE2Eテストをサポートします。
 
+  ## 注意事項
+
+  WallabyのEctoサンドボックス制限により、テストプロセスで作成したデータは
+  ブラウザセッションからは直接アクセスできません。そのため、E2Eテストでは
+  以下のいずれかの方法を使用してください：
+
+  1. UIを通じてデータを作成するテスト
+  2. 公開ページのテスト（認証不要なページ）
+  3. エラー状態のテスト（無効なトークンなど）
+
   ## 使用例
 
       use MatsuriOpsWeb.FeatureCase
 
-      feature "ユーザーがログインできる", %{session: session} do
+      feature "ユーザーが登録できる", %{session: session} do
         session
-        |> visit("/users/log-in")
-        |> fill_in(text_field("email"), with: "test@example.com")
-        |> click(button("ログイン"))
-        |> assert_has(text("ログインリンクを送信しました"))
+        |> visit("/users/register")
+        |> fill_in(css("input[name='user[email]']"), with: "test@example.com")
+        |> click(button("Create an account"))
+        |> assert_has(css("h1", text: "Log in"))
       end
   """
 
@@ -26,7 +36,7 @@ defmodule MatsuriOpsWeb.FeatureCase do
       alias MatsuriOps.Repo
       alias MatsuriOpsWeb.Endpoint
 
-      import Ecto.Query
+      # Note: Ecto.Query is NOT imported to avoid conflicts with Wallaby.Query
       import Wallaby.Query
       import MatsuriOpsWeb.FeatureCase.Helpers
 
@@ -34,12 +44,17 @@ defmodule MatsuriOpsWeb.FeatureCase do
     end
   end
 
-  setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(MatsuriOps.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+  setup _tags do
+    # E2Eテストは非同期実行しない
+    # サンドボックスは使用しない（ブラウザからアクセスできないため）
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatsuriOps.Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(MatsuriOps.Repo, {:shared, self()})
 
-    metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(MatsuriOps.Repo, pid)
-    {:ok, session} = Wallaby.start_session(metadata: metadata)
+    {:ok, session} = Wallaby.start_session()
+
+    on_exit(fn ->
+      Wallaby.end_session(session)
+    end)
 
     {:ok, session: session}
   end
@@ -50,24 +65,6 @@ defmodule MatsuriOpsWeb.FeatureCase do
     """
 
     import Wallaby.Query
-
-    @doc """
-    ユーザーを作成してログインセッションを開始する。
-    Magic Link認証をシミュレートする。
-    """
-    def create_and_login_user(session, attrs \\ %{}) do
-      user = MatsuriOps.AccountsFixtures.user_fixture(attrs)
-      token = MatsuriOps.Accounts.generate_user_session_token(user)
-
-      # Magic Linkトークンを作成
-      {login_token, _hashed} = MatsuriOps.Accounts.UserToken.build_email_token(user, "magic_link")
-
-      # ログインページにアクセスしてトークンでログイン
-      session
-      |> Wallaby.Browser.visit("/users/log-in/#{login_token}")
-
-      {session, user}
-    end
 
     @doc """
     テキストフィールドを取得するクエリ。
@@ -109,9 +106,10 @@ defmodule MatsuriOpsWeb.FeatureCase do
     end
 
     @doc """
-    フラッシュメッセージを確認。
+    フラッシュメッセージのセレクタを返す。
+    テスト内で assert_has(flash_selector(:info, "メッセージ")) のように使用。
     """
-    def assert_flash(session, type, text) do
+    def flash_selector(type, text \\ nil) do
       selector = case type do
         :info -> ".alert-info"
         :error -> ".alert-error"
@@ -119,7 +117,23 @@ defmodule MatsuriOpsWeb.FeatureCase do
         _ -> ".alert"
       end
 
-      Wallaby.Browser.assert_has(session, css(selector, text: text))
+      if text do
+        css(selector, text: text)
+      else
+        css(selector)
+      end
+    end
+
+    @doc """
+    セレクトボックスでオプションを選択する。
+    Ecto.Query.selectとの競合を避けるためのヘルパー。
+    """
+    def select_option(session, select_query, option_text) do
+      session
+      |> Wallaby.Browser.find(select_query, fn select_element ->
+        select_element
+        |> Wallaby.Browser.click(Wallaby.Query.option(option_text))
+      end)
     end
   end
 end

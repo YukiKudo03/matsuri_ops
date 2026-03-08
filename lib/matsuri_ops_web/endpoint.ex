@@ -1,6 +1,13 @@
 defmodule MatsuriOpsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :matsuri_ops
 
+  # SQL sandbox plug for E2E tests (currently simplified tests don't rely on sandbox sharing)
+  # Note: Full sandbox sharing between test process and browser requires additional setup
+  # See: https://hexdocs.pm/phoenix_ecto/Phoenix.Ecto.SQL.Sandbox.html
+  if Mix.env() == :test do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
@@ -12,8 +19,8 @@ defmodule MatsuriOpsWeb.Endpoint do
   ]
 
   socket "/live", Phoenix.LiveView.Socket,
-    websocket: [connect_info: [session: @session_options]],
-    longpoll: [connect_info: [session: @session_options]]
+    websocket: [connect_info: [:user_agent, session: @session_options]],
+    longpoll: [connect_info: [:user_agent, session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -51,5 +58,6 @@ defmodule MatsuriOpsWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
   plug MatsuriOpsWeb.Router
 end

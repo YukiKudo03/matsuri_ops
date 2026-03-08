@@ -16,12 +16,11 @@ config :matsuri_ops, MatsuriOps.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
+# Run a server during test for Wallaby E2E tests
 config :matsuri_ops, MatsuriOpsWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "EvqfUWpiGnjIOVWGzezfEEVsUVlAnNw1lRHK7igYE+PddYWV1ae1Ngof7KFCvjry",
-  server: false
+  server: true
 
 # Print only warnings and errors during test
 config :logger, level: :warning
@@ -41,11 +40,8 @@ config :phoenix,
 config :wallaby,
   driver: Wallaby.Chrome,
   chromedriver: [
+    path: System.get_env("HOME") <> "/.local/bin/chromedriver",
     headless: true
   ],
   screenshot_on_failure: true,
   screenshot_dir: "tmp/wallaby_screenshots"
-
-# Enable server for E2E tests (Wallaby needs a running server)
-config :matsuri_ops, MatsuriOpsWeb.Endpoint,
-  server: true
