@@ -185,10 +185,10 @@ defmodule MatsuriOps.GalleryTest do
       image1 = gallery_image_fixture(festival)
       image2 = gallery_image_fixture(festival, %{title: "人気画像"})
 
-      # 画像2を承認してから、いいねを追加
+      # 画像2を承認してから、いいねを追加（返り値を使って連続インクリメント）
       {:ok, approved2} = Gallery.approve_image(image2, user.id)
-      {:ok, _} = Gallery.increment_like_count(approved2)
-      {:ok, _} = Gallery.increment_like_count(approved2)
+      {:ok, approved2} = Gallery.increment_like_count(approved2)
+      {:ok, _approved2} = Gallery.increment_like_count(approved2)
 
       {:ok, approved1} = Gallery.approve_image(image1, user.id)
       {:ok, _} = Gallery.increment_like_count(approved1)

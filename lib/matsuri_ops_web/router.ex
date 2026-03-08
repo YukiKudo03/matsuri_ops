@@ -56,6 +56,13 @@ defmodule MatsuriOpsWeb.Router do
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
 
+      # Help routes
+      live "/help", HelpLive.Index, :index
+      live "/help/quickstart", HelpLive.Quickstart, :index
+      live "/help/admin", HelpLive.Admin, :index
+      live "/help/staff", HelpLive.Staff, :index
+      live "/help/external", HelpLive.External, :index
+
       # Festival routes
       live "/festivals", FestivalLive.Index, :index
       live "/festivals/new", FestivalLive.Index, :new
