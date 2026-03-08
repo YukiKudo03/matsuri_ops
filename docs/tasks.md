@@ -5,7 +5,7 @@
 | 項目 | 内容 |
 |------|------|
 | 文書名 | タスク表 |
-| バージョン | 4.0 |
+| バージョン | 5.0 |
 | 作成日 | 2026年3月7日 |
 | 最終更新日 | 2026年3月8日 |
 | 開発手法 | TDD (Test-Driven Development) |
@@ -151,7 +151,7 @@
 | I-RPT-003 | PDF出力実装 | 🟢 GREEN | ✅ 完了 | HTMLベース、chromic_pdf等で拡張可 |
 | T-RPT-004 | レポートLiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-RPT-004 | レポートLiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-RPT-001 | 決算報告リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-RPT-001 | 決算報告リファクタリング | 🔵 REFACTOR | ✅ 完了 | FormattingHelpers抽出 |
 
 ### 4.3 グループチャット (#3)
 
@@ -165,7 +165,7 @@
 | I-CHAT-003 | 既読管理実装 | 🟢 GREEN | ✅ 完了 | |
 | T-CHAT-004 | チャットLiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-CHAT-004 | チャットLiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-CHAT-001 | チャットリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-CHAT-001 | チャットリファクタリング | 🔵 REFACTOR | ✅ 完了 | FormattingHelpers統合 |
 
 ### 4.4 スタッフ位置表示 (#4)
 
@@ -179,7 +179,7 @@
 | I-LOC-003 | リアルタイム位置更新実装 | 🟢 GREEN | ✅ 完了 | |
 | T-LOC-004 | 会場マップLiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-LOC-004 | 会場マップLiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-LOC-001 | 位置表示リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-LOC-001 | 位置表示リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 4.5 ベトナム語対応 (#5)
 
@@ -191,7 +191,7 @@
 | I-I18N-002 | 翻訳ファイル作成 | 🟢 GREEN | ✅ 完了 | ja, vi |
 | T-I18N-003 | 言語切替UIテスト | 🔴 RED | ✅ 完了 | |
 | I-I18N-003 | 言語切替UI実装 | 🟢 GREEN | ✅ 完了 | |
-| R-I18N-001 | 国際化リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-I18N-001 | 国際化リファクタリング | 🔵 REFACTOR | ✅ 完了 | LocaleConfig抽出 |
 
 ---
 
@@ -211,7 +211,7 @@
 | I-DOC-004 | 検索機能実装 | 🟢 GREEN | ✅ 完了 | |
 | T-DOC-005 | 文書管理LiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-DOC-005 | 文書管理LiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-DOC-001 | 文書管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-DOC-001 | 文書管理リファクタリング | 🔵 REFACTOR | ✅ 完了 | FormattingHelpers統合 |
 
 ### 5.2 プッシュ通知・お知らせ (#7)
 
@@ -225,7 +225,7 @@
 | I-NOTIF-003 | Web Push API実装 | 🟢 GREEN | ✅ 完了 | |
 | T-NOTIF-004 | お知らせLiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-NOTIF-004 | お知らせLiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-NOTIF-001 | 通知リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-NOTIF-001 | 通知リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 5.3 シフト管理・配置図 (#8)
 
@@ -239,7 +239,7 @@
 | I-SHIFT-003 | シフト表LiveView実装 | 🟢 GREEN | ✅ 完了 | |
 | T-SHIFT-004 | 配置図エディタテスト | 🔴 RED | ✅ 完了 | |
 | I-SHIFT-004 | 配置図エディタ実装 | 🟢 GREEN | ✅ 完了 | |
-| R-SHIFT-001 | シフト管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-SHIFT-001 | シフト管理リファクタリング | 🔵 REFACTOR | ✅ 完了 | N+1最適化済 |
 
 ### 5.4 ガントチャート表示 (#9)
 
@@ -251,7 +251,7 @@
 | I-GANTT-002 | 依存関係計算実装 | 🟢 GREEN | ✅ 完了 | |
 | T-GANTT-003 | ガントチャートLiveViewテスト | 🔴 RED | ✅ 完了 | |
 | I-GANTT-003 | ガントチャートLiveView実装 | 🟢 GREEN | ✅ 完了 | |
-| R-GANTT-001 | ガントチャートリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-GANTT-001 | ガントチャートリファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 5.5 PWA対応 (#10)
 
@@ -265,7 +265,7 @@
 | I-PWA-003 | マニフェスト実装 | 🟢 GREEN | ✅ 完了 | |
 | T-PWA-004 | Background Syncテスト | 🔴 RED | ✅ 完了 | |
 | I-PWA-004 | Background Sync実装 | 🟢 GREEN | ✅ 完了 | |
-| R-PWA-001 | PWAリファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-PWA-001 | PWAリファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ---
 
@@ -281,7 +281,7 @@
 | I-P3-002 | ネイティブ機能実装 | 🟢 GREEN | ✅ 完了 | |
 | T-P3-003 | ディープリンクテスト | 🔴 RED | ✅ 完了 | deep_link, universal_link |
 | I-P3-003 | ディープリンク実装 | 🟢 GREEN | ✅ 完了 | |
-| R-P3-001 | ネイティブ対応リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-P3-001 | ネイティブ対応リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 6.2 ライブカメラ連携 (#13)
 
@@ -293,7 +293,7 @@
 | I-CAM-002 | 録画管理実装 | 🟢 GREEN | ✅ 完了 | |
 | T-CAM-003 | カメラステータステスト | 🔴 RED | ✅ 完了 | online/offline |
 | I-CAM-003 | カメラステータス実装 | 🟢 GREEN | ✅ 完了 | PubSub連携 |
-| R-CAM-001 | カメラ連携リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-CAM-001 | カメラ連携リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 6.3 予測分析機能 (#14)
 
@@ -309,7 +309,7 @@
 | I-ANA-004 | 異常検出実装 | 🟢 GREEN | ✅ 完了 | |
 | T-ANA-005 | 改善提案テスト | 🔴 RED | ✅ 完了 | recommendations |
 | I-ANA-005 | 改善提案実装 | 🟢 GREEN | ✅ 完了 | |
-| R-ANA-001 | 予測分析リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-ANA-001 | 予測分析リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ### 6.4 協賛金管理機能 (#15)
 
@@ -323,7 +323,7 @@
 | I-SPO-003 | 特典管理実装 | 🟢 GREEN | ✅ 完了 | |
 | T-SPO-004 | 統計・サマリーテスト | 🔴 RED | ✅ 完了 | |
 | I-SPO-004 | 統計・サマリー実装 | 🟢 GREEN | ✅ 完了 | |
-| R-SPO-001 | 協賛金管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| R-SPO-001 | 協賛金管理リファクタリング | 🔵 REFACTOR | ✅ 完了 | 分析完了 |
 
 ---
 
