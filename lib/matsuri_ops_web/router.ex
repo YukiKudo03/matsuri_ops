@@ -87,6 +87,10 @@ defmodule MatsuriOpsWeb.Router do
       live "/festivals/:festival_id/operations/areas/new", OperationsLive.Dashboard, :new_area
       live "/festivals/:festival_id/operations/areas/:id/edit", OperationsLive.Dashboard, :edit_area
 
+      # Report routes
+      live "/festivals/:festival_id/reports", ReportLive.Index, :index
+      live "/reports/compare", ReportLive.Compare, :compare
+
       # Template routes
       live "/templates", TemplateLive.Index, :index
       live "/templates/new", TemplateLive.Index, :new

@@ -20,6 +20,13 @@ defmodule MatsuriOps.Festivals do
     |> Repo.all()
   end
 
+  def list_user_festivals(%MatsuriOps.Accounts.User{} = user) do
+    Festival
+    |> where([f], f.organizer_id == ^user.id)
+    |> order_by([f], desc: f.start_date)
+    |> Repo.all()
+  end
+
   def get_festival!(id), do: Repo.get!(Festival, id)
 
   def get_festival(id), do: Repo.get(Festival, id)
