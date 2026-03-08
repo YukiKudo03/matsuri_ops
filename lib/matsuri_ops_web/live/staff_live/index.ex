@@ -4,7 +4,6 @@ defmodule MatsuriOpsWeb.StaffLive.Index do
   alias MatsuriOps.Festivals
   alias MatsuriOps.Festivals.FestivalMember
   alias MatsuriOps.Accounts
-  alias MatsuriOps.Accounts.User
 
   @impl true
   def mount(%{"festival_id" => festival_id}, _session, socket) do

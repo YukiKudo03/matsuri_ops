@@ -129,15 +129,15 @@
 
 | ID | タスク | TDDフェーズ | 状態 | 備考 |
 |----|--------|-------------|------|------|
-| T-TPL-001 | Templateスキーマテスト作成 | 🔴 RED | 🔲 未着手 | changeset, validation |
-| I-TPL-001 | Templateスキーマ実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-TPL-002 | テンプレート作成機能テスト | 🔴 RED | 🔲 未着手 | create, copy |
-| I-TPL-002 | テンプレート作成機能実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-TPL-003 | テンプレートから祭り作成テスト | 🔴 RED | 🔲 未着手 | apply_template |
-| I-TPL-003 | テンプレートから祭り作成実装 | 🟢 GREEN | 🔲 未着手 | |
-| T-TPL-004 | テンプレート管理LiveViewテスト | 🔴 RED | 🔲 未着手 | |
-| I-TPL-004 | テンプレート管理LiveView実装 | 🟢 GREEN | 🔲 未着手 | |
-| R-TPL-001 | テンプレート管理リファクタリング | 🔵 REFACTOR | 🔲 未着手 | |
+| T-TPL-001 | Templateスキーマテスト作成 | 🔴 RED | ✅ 完了 | changeset, validation |
+| I-TPL-001 | Templateスキーマ実装 | 🟢 GREEN | ✅ 完了 | |
+| T-TPL-002 | テンプレート作成機能テスト | 🔴 RED | ✅ 完了 | create, copy |
+| I-TPL-002 | テンプレート作成機能実装 | 🟢 GREEN | ✅ 完了 | |
+| T-TPL-003 | テンプレートから祭り作成テスト | 🔴 RED | ✅ 完了 | apply_template |
+| I-TPL-003 | テンプレートから祭り作成実装 | 🟢 GREEN | ✅ 完了 | |
+| T-TPL-004 | テンプレート管理LiveViewテスト | 🔴 RED | ✅ 完了 | |
+| I-TPL-004 | テンプレート管理LiveView実装 | 🟢 GREEN | ✅ 完了 | |
+| R-TPL-001 | テンプレート管理リファクタリング | 🔵 REFACTOR | ✅ 完了 | 未使用alias削除 |
 
 ### 4.2 決算報告・年度比較 (#2)
 

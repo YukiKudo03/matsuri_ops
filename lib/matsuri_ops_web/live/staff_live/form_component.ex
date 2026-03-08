@@ -2,7 +2,6 @@ defmodule MatsuriOpsWeb.StaffLive.FormComponent do
   use MatsuriOpsWeb, :live_component
 
   alias MatsuriOps.Festivals
-  alias MatsuriOps.Accounts.User
 
   @impl true
   def render(assigns) do

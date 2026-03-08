@@ -36,6 +36,12 @@ defmodule MatsuriOps.Festivals do
     |> Repo.insert()
   end
 
+  def create_festival(%MatsuriOps.Accounts.User{} = user, attrs) do
+    %Festival{organizer_id: user.id}
+    |> Festival.changeset(attrs)
+    |> Repo.insert()
+  end
+
   def update_festival(%Festival{} = festival, attrs) do
     festival
     |> Festival.changeset(attrs)

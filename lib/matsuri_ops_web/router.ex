@@ -86,6 +86,13 @@ defmodule MatsuriOpsWeb.Router do
       live "/festivals/:festival_id/operations/incidents/:id/edit", OperationsLive.Dashboard, :edit_incident
       live "/festivals/:festival_id/operations/areas/new", OperationsLive.Dashboard, :new_area
       live "/festivals/:festival_id/operations/areas/:id/edit", OperationsLive.Dashboard, :edit_area
+
+      # Template routes
+      live "/templates", TemplateLive.Index, :index
+      live "/templates/new", TemplateLive.Index, :new
+      live "/templates/:id/edit", TemplateLive.Index, :edit
+      live "/templates/:id", TemplateLive.Show, :show
+      live "/templates/:id/apply", TemplateLive.Apply, :apply
     end
 
     post "/users/update-password", UserSessionController, :update_password
