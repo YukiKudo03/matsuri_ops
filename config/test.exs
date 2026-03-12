@@ -41,7 +41,31 @@ config :wallaby,
   driver: Wallaby.Chrome,
   chromedriver: [
     path: System.get_env("HOME") <> "/.local/bin/chromedriver",
-    headless: true
+    headless: true,
+    capabilities: %{
+      javascriptEnabled: false,
+      loadImages: false,
+      version: "",
+      rotatable: false,
+      takesScreenshot: true,
+      cssSelectorsEnabled: true,
+      nativeEvents: false,
+      platform: "ANY",
+      unhandledPromptBehavior: "accept",
+      loggingPrefs: %{browser: "DEBUG"},
+      chromeOptions: %{
+        args: [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-gpu",
+          "--headless",
+          "--fullscreen",
+          "window-size=1280,800",
+          "--user-agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+        ]
+      }
+    }
   ],
-  screenshot_on_failure: true,
-  screenshot_dir: "tmp/wallaby_screenshots"
+  screenshot_on_failure: false,
+  screenshot_dir: "tmp/wallaby_screenshots",
+  js_errors: false

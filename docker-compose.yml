@@ -35,8 +35,28 @@ services:
         condition: service_healthy
     command: mix phx.server
 
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      MIX_ENV: test
+      DATABASE_HOST: db
+    volumes:
+      - .:/app
+      - test_deps:/app/deps
+      - test_build:/app/_build
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - test
+    command: mix test test/features/ --trace
+
 volumes:
   postgres_data:
   deps:
   build:
   node_modules:
+  test_deps:
+  test_build:
