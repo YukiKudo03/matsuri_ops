@@ -22,7 +22,19 @@
 | [要件定義書](requirements.md) | システム要件・機能要件 |
 | [基本設計書](basic_design.md) | アーキテクチャ・データベース設計 |
 | [タスク管理](tasks.md) | 開発タスクの進捗管理 |
+| [テストレポート](TEST_REPORT.md) | テスト実行結果・カバレッジ |
+| [E2Eテスト計画](e2e_test_plan.md) | E2Eフィーチャーテストの仕様 |
 | [セッションログ](session_log.md) | 開発セッションの記録 |
+
+### コードマップ
+
+| ドキュメント | 説明 |
+|-------------|------|
+| [CODEMAPS/architecture.md](CODEMAPS/architecture.md) | システム全体構成・レイヤー図・ドメイン一覧 |
+| [CODEMAPS/backend.md](CODEMAPS/backend.md) | ルーティング・コンテキスト・認証フロー |
+| [CODEMAPS/frontend.md](CODEMAPS/frontend.md) | コンポーネント階層・デザインシステム・JS |
+| [CODEMAPS/data.md](CODEMAPS/data.md) | ER図・テーブル定義・ステータスワークフロー |
+| [CODEMAPS/dependencies.md](CODEMAPS/dependencies.md) | 外部依存・サービス統合 |
 
 ### 画像リソース
 
