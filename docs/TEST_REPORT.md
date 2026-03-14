@@ -1,8 +1,8 @@
 # MatsuriOps テストレポート
 
-**生成日時**: 2026-03-08 16:42:36
-**Elixir/Phoenix バージョン**: Phoenix 1.8.5 / Elixir 1.18
-**テスト実行時間**: 5.7秒
+**生成日時**: 2026-03-13
+**Elixir/Phoenix バージョン**: Phoenix 1.8.5 / Elixir 1.17
+**テスト実行時間**: 7.4秒
 
 ---
 
@@ -10,12 +10,12 @@
 
 | 項目 | 値 | 前回比 |
 |------|-----|--------|
-| **総テスト数** | 629 | +110 |
-| **成功** | 629 | - |
+| **総テスト数** | 877 | +248 |
+| **成功** | 877 | - |
 | **失敗** | 0 | - |
-| **除外** | 8 | - |
-| **テストファイル数** | 54 | +5 |
-| **カバレッジ** | 51.86% | +5.04% |
+| **除外（E2Eフィーチャー）** | 45 | +37 |
+| **テストファイル数** | 56 | +2 |
+| **カバレッジ** | 67.33% | +15.47% |
 
 ---
 
@@ -101,11 +101,13 @@
 
 ### 3. フィーチャーテスト (`test/features/`)
 
-| ファイル | シナリオ | 説明 |
-|----------|---------|------|
-| `authentication_test.exs` | 認証フロー | ログイン・ログアウト |
-| `festival_management_test.exs` | 祭り管理 | 作成・編集・削除 |
-| `operations_dashboard_test.exs` | 運営ダッシュボード | 当日運営 |
+| ファイル | シナリオ | テスト数 | 説明 |
+|----------|---------|---------|------|
+| `authentication_test.exs` | 認証フロー (A-01〜A-11) | 11 | ログイン・ログアウト・登録 |
+| `festival_management_test.exs` | 祭り管理 (F-01〜F-11) | 11 | 作成・編集・削除・一覧 |
+| `task_management_test.exs` | タスク管理 (T-01〜T-10) | 10 | タスクCRUD・ステータス管理 |
+| `budget_management_test.exs` | 予算管理 (B-01〜B-09) | 9 | 予算カテゴリ・経費・収入 |
+| `operations_dashboard_test.exs` | 運営ダッシュボード (O-01〜O-04) | 4 | 当日運営・インシデント |
 
 ### 4. テストフィクスチャ (`test/support/fixtures/`)
 
@@ -157,15 +159,13 @@
 
 ### 改善が必要なモジュール（50%未満）
 
-| モジュール | カバレッジ |
-|-----------|-----------|
-| MatsuriOps.Operations | 0.00% |
-| MatsuriOpsWeb.BudgetLive.Index | 0.00% |
-| MatsuriOpsWeb.TaskLive.Index | 0.00% |
-| MatsuriOpsWeb.StaffLive.Index | 0.00% |
-| MatsuriOpsWeb.OperationsLive.Dashboard | 0.00% |
-| MatsuriOpsWeb.Router | 42.68% |
-| MatsuriOps.QRCodes.QRCode | 46.67% |
+| モジュール | カバレッジ | 備考 |
+|-----------|-----------|------|
+| MatsuriOpsWeb.Router | 42.68% | ルート定義のため低カバレッジは許容範囲 |
+| MatsuriOps.QRCodes.QRCode | 46.67% | - |
+
+> 注: commit 7a97feb でOperations, BudgetLive, TaskLive, StaffLive, OperationsLiveの各モジュールに
+> テストが追加され、カバレッジが67.33%に改善されました。
 
 ---
 
@@ -293,7 +293,7 @@
 ## テスト実行コマンド
 
 ```bash
-# 全テスト実行
+# 全ユニットテスト実行（フィーチャーテスト除外）
 mix test
 
 # カバレッジ付きで実行
@@ -310,20 +310,37 @@ mix test test/matsuri_ops_web/live/festival_live/
 # 詳細出力
 mix test --trace
 
-# フィーチャーテスト含む
+# フィーチャーテスト含む（Chrome/ChromeDriver必要）
 mix test --include feature
+```
+
+### Docker環境でのテスト実行
+
+```bash
+# ユニットテスト（app サービス）
+docker compose run --rm -e MIX_ENV=test -e DATABASE_HOST=db app mix test
+
+# E2Eフィーチャーテスト（test サービス、Chrome内蔵）
+docker compose --profile test run --rm test
+
+# 特定のフィーチャーテストのみ
+docker compose --profile test run --rm test mix test test/features/authentication_test.exs --include feature
 ```
 
 ---
 
 ## 除外されたテスト
 
-8件のフィーチャーテストが `@tag :feature` により除外されています。
-これらは統合テスト環境でのみ実行されます。
+45件のE2Eフィーチャーテストが `@tag :feature` により除外されています。
+これらはChrome/ChromeDriverが必要な統合テスト環境でのみ実行されます。
+Docker `test` サービス（`Dockerfile.test`）にはChrome環境が含まれています。
 
 ```bash
-# フィーチャーテストを含めて実行
+# ローカル実行（Chrome/ChromeDriver必要）
 mix test --include feature
+
+# Docker環境で実行
+docker compose --profile test run --rm test
 ```
 
 ---
@@ -338,4 +355,4 @@ mix test --include feature
 ---
 
 **生成**: Claude Code
-**最終更新**: 2026-03-08
+**最終更新**: 2026-03-13
