@@ -1,8 +1,8 @@
 defmodule MatsuriOps.QRCodesTest do
-  use MatsuriOps.DataCase
+  use MatsuriOps.DataCase, async: true
 
   alias MatsuriOps.QRCodes
-  alias MatsuriOps.QRCodes.QRCode
+  alias MatsuriOps.QRCodes.QRCode, as: QRCodeSchema
 
   describe "qr_codes" do
     setup do
@@ -51,18 +51,35 @@ defmodule MatsuriOps.QRCodesTest do
       assert hd(ticket_codes).code_type == "ticket"
     end
 
+    test "list_qr_codes_by_type/2 returns empty for non-existent type", %{festival: festival} do
+      qr_code_fixture(festival)
+      assert QRCodes.list_qr_codes_by_type(festival.id, "nonexistent") == []
+    end
+
     test "get_qr_code!/1 returns the qr_code with given id", %{festival: festival} do
       qr_code = qr_code_fixture(festival)
       assert QRCodes.get_qr_code!(qr_code.id) == qr_code
+    end
+
+    test "get_qr_code!/1 raises for non-existent id" do
+      assert_raise Ecto.NoResultsError, fn ->
+        QRCodes.get_qr_code!(999_999)
+      end
     end
 
     test "get_qr_code/1 returns nil for non-existent id" do
       assert QRCodes.get_qr_code(999_999) == nil
     end
 
+    test "get_qr_code/1 returns the qr_code with given id", %{festival: festival} do
+      qr_code = qr_code_fixture(festival)
+      found = QRCodes.get_qr_code(qr_code.id)
+      assert found.id == qr_code.id
+    end
+
     test "create_qr_code/1 with valid data creates a qr_code and generates SVG", %{festival: festival} do
       attrs = Map.put(@valid_attrs, :festival_id, festival.id)
-      assert {:ok, %QRCode{} = qr_code} = QRCodes.create_qr_code(attrs)
+      assert {:ok, %QRCodeSchema{} = qr_code} = QRCodes.create_qr_code(attrs)
       assert qr_code.name == "テストQRコード"
       assert qr_code.code_type == "ticket"
       assert qr_code.target_url == "https://example.com/ticket/123"
@@ -97,7 +114,7 @@ defmodule MatsuriOps.QRCodesTest do
 
     test "update_qr_code/2 with valid data updates the qr_code", %{festival: festival} do
       qr_code = qr_code_fixture(festival)
-      assert {:ok, %QRCode{} = updated} = QRCodes.update_qr_code(qr_code, @update_attrs)
+      assert {:ok, %QRCodeSchema{} = updated} = QRCodes.update_qr_code(qr_code, @update_attrs)
       assert updated.name == "更新されたQRコード"
       assert updated.code_type == "location"
       assert updated.target_url == "https://example.com/location/456"
@@ -112,6 +129,16 @@ defmodule MatsuriOps.QRCodesTest do
       assert updated.svg_data != original_svg
     end
 
+    test "update_qr_code/2 does not regenerate SVG when URL unchanged", %{festival: festival} do
+      qr_code = qr_code_fixture(festival)
+      original_svg = qr_code.svg_data
+
+      {:ok, updated} = QRCodes.update_qr_code(qr_code, %{name: "新しい名前"})
+
+      assert updated.svg_data == original_svg
+      assert updated.name == "新しい名前"
+    end
+
     test "update_qr_code/2 with invalid data returns error changeset", %{festival: festival} do
       qr_code = qr_code_fixture(festival)
       assert {:error, %Ecto.Changeset{}} = QRCodes.update_qr_code(qr_code, @invalid_attrs)
@@ -120,13 +147,20 @@ defmodule MatsuriOps.QRCodesTest do
 
     test "delete_qr_code/1 deletes the qr_code", %{festival: festival} do
       qr_code = qr_code_fixture(festival)
-      assert {:ok, %QRCode{}} = QRCodes.delete_qr_code(qr_code)
+      assert {:ok, %QRCodeSchema{}} = QRCodes.delete_qr_code(qr_code)
       assert_raise Ecto.NoResultsError, fn -> QRCodes.get_qr_code!(qr_code.id) end
     end
 
     test "change_qr_code/1 returns a qr_code changeset", %{festival: festival} do
       qr_code = qr_code_fixture(festival)
       assert %Ecto.Changeset{} = QRCodes.change_qr_code(qr_code)
+    end
+
+    test "change_qr_code/2 with attrs returns a changeset", %{festival: festival} do
+      qr_code = qr_code_fixture(festival)
+      changeset = QRCodes.change_qr_code(qr_code, %{name: "新しい名前"})
+      assert %Ecto.Changeset{} = changeset
+      assert Ecto.Changeset.get_change(changeset, :name) == "新しい名前"
     end
 
     test "increment_scan_count/1 increments the scan count", %{festival: festival} do
@@ -162,6 +196,23 @@ defmodule MatsuriOps.QRCodesTest do
       assert stats.by_type["location"] == 1
     end
 
+    test "get_statistics/1 returns zeros for empty festival" do
+      festival = festival_fixture(%{name: "空の祭り"})
+      stats = QRCodes.get_statistics(festival.id)
+      assert stats.total_count == 0
+      assert stats.total_scans == 0
+      assert stats.by_type == %{}
+    end
+
+    test "get_statistics/1 includes scan counts", %{festival: festival} do
+      qr = qr_code_fixture(festival)
+      {:ok, _} = QRCodes.increment_scan_count(qr)
+      {:ok, _} = QRCodes.increment_scan_count(qr.id)
+
+      stats = QRCodes.get_statistics(festival.id)
+      assert stats.total_scans == 2
+    end
+
     test "generate_qr_svg/1 generates valid SVG", %{festival: _festival} do
       svg = QRCodes.generate_qr_svg("https://example.com")
       assert String.contains?(svg, "<svg")
@@ -170,6 +221,21 @@ defmodule MatsuriOps.QRCodesTest do
 
     test "generate_qr_svg/1 with nil returns nil", %{festival: _festival} do
       assert QRCodes.generate_qr_svg(nil) == nil
+    end
+
+    test "generate_qr_svg/1 generates different SVGs for different URLs" do
+      svg1 = QRCodes.generate_qr_svg("https://example.com/1")
+      svg2 = QRCodes.generate_qr_svg("https://example.com/2")
+      assert svg1 != svg2
+    end
+
+    test "generate_qr_png/1 generates PNG data" do
+      result = QRCodes.generate_qr_png("https://example.com")
+      assert result != nil
+    end
+
+    test "generate_qr_png/1 with nil returns nil" do
+      assert QRCodes.generate_qr_png(nil) == nil
     end
   end
 

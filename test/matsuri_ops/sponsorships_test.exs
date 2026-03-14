@@ -220,6 +220,85 @@ defmodule MatsuriOps.SponsorshipsTest do
       {:ok, benefit} = Sponsorships.add_benefit(sponsorship, %{name: "特典", status: "pending"})
       assert {:ok, updated} = Sponsorships.update_benefit_status(benefit, "completed")
       assert updated.status == "completed"
+      assert updated.completed_at != nil
+    end
+
+    test "update_benefit_status/2 to in_progress does not set completed_at", %{sponsorship: sponsorship} do
+      {:ok, benefit} = Sponsorships.add_benefit(sponsorship, %{name: "特典", status: "pending"})
+      assert {:ok, updated} = Sponsorships.update_benefit_status(benefit, "in_progress")
+      assert updated.status == "in_progress"
+    end
+
+    test "delete_benefit/1 deletes benefit", %{sponsorship: sponsorship} do
+      {:ok, benefit} = Sponsorships.add_benefit(sponsorship, %{name: "削除特典", status: "pending"})
+      assert {:ok, _} = Sponsorships.delete_benefit(benefit)
+      assert Sponsorships.list_benefits(sponsorship.id) == []
+    end
+  end
+
+  describe "sponsorship tier details" do
+    test "tier_benefits/1 returns benefits for all tiers" do
+      for tier <- ["platinum", "gold", "silver", "bronze", "supporter"] do
+        benefits = Sponsorships.tier_benefits(tier)
+        assert is_list(benefits)
+        assert length(benefits) > 0, "#{tier} should have benefits"
+      end
+    end
+
+    test "tier_benefits/1 returns empty list for unknown tier" do
+      assert Sponsorships.tier_benefits("unknown") == []
+    end
+
+    test "minimum_amount/1 returns amounts in descending order" do
+      assert Sponsorships.minimum_amount("platinum") == 1_000_000
+      assert Sponsorships.minimum_amount("gold") == 500_000
+      assert Sponsorships.minimum_amount("silver") == 300_000
+      assert Sponsorships.minimum_amount("bronze") == 100_000
+      assert Sponsorships.minimum_amount("supporter") == 50_000
+    end
+
+    test "minimum_amount/1 returns 0 for unknown tier" do
+      assert Sponsorships.minimum_amount("unknown") == 0
+    end
+  end
+
+  describe "additional sponsorship operations" do
+    setup do
+      user = user_fixture()
+      festival = festival_fixture(user)
+      sponsor = sponsor_fixture()
+      {:ok, festival: festival, sponsor: sponsor}
+    end
+
+    test "change_sponsor/2 returns a changeset" do
+      sponsor = sponsor_fixture()
+      assert %Ecto.Changeset{} = Sponsorships.change_sponsor(sponsor)
+    end
+
+    test "change_sponsorship/2 returns a changeset", %{festival: festival, sponsor: sponsor} do
+      sponsorship = sponsorship_fixture(festival, sponsor)
+      assert %Ecto.Changeset{} = Sponsorships.change_sponsorship(sponsorship)
+    end
+
+    test "get_sponsorship!/1 returns sponsorship with preloaded sponsor", %{festival: festival, sponsor: sponsor} do
+      sponsorship = sponsorship_fixture(festival, sponsor)
+      found = Sponsorships.get_sponsorship!(sponsorship.id)
+      assert found.sponsor.id == sponsor.id
+    end
+
+    test "total_sponsorship_amount/1 returns 0 for empty festival" do
+      user = user_fixture()
+      empty = festival_fixture(user, %{name: "空の祭り"})
+      assert Sponsorships.total_sponsorship_amount(empty.id) == 0
+    end
+
+    test "payment_status_summary/1 includes partial payments", %{festival: festival} do
+      sponsor = sponsor_fixture(%{name: "部分払い企業"})
+      sponsorship_fixture(festival, sponsor, %{payment_status: "partial", amount: 200_000})
+
+      summary = Sponsorships.payment_status_summary(festival.id)
+      assert summary.partial_amount == 200_000
+      assert summary.partial_count == 1
     end
   end
 

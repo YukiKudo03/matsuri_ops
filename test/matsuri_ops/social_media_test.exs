@@ -1,5 +1,5 @@
 defmodule MatsuriOps.SocialMediaTest do
-  use MatsuriOps.DataCase
+  use MatsuriOps.DataCase, async: true
 
   alias MatsuriOps.SocialMedia
   alias MatsuriOps.SocialMedia.{SocialAccount, SocialPost}
@@ -40,6 +40,29 @@ defmodule MatsuriOps.SocialMediaTest do
       assert length(active) == 1
     end
 
+    test "get_account_by_platform/2 returns the active account for a platform", %{festival: festival} do
+      social_account_fixture(festival, %{platform: "twitter", account_name: "tw"})
+
+      account = SocialMedia.get_account_by_platform(festival.id, "twitter")
+      assert account.platform == "twitter"
+    end
+
+    test "get_account_by_platform/2 returns nil for non-existent platform", %{festival: festival} do
+      assert SocialMedia.get_account_by_platform(festival.id, "instagram") == nil
+    end
+
+    test "get_social_account!/1 returns the account", %{festival: festival} do
+      account = social_account_fixture(festival)
+      found = SocialMedia.get_social_account!(account.id)
+      assert found.id == account.id
+    end
+
+    test "get_social_account!/1 raises for non-existent id" do
+      assert_raise Ecto.NoResultsError, fn ->
+        SocialMedia.get_social_account!(999_999)
+      end
+    end
+
     test "create_social_account/1 with valid data creates an account", %{festival: festival} do
       attrs = Map.put(@valid_attrs, :festival_id, festival.id)
       assert {:ok, %SocialAccount{} = account} = SocialMedia.create_social_account(attrs)
@@ -54,6 +77,39 @@ defmodule MatsuriOps.SocialMediaTest do
         |> Map.put(:platform, "invalid")
 
       assert {:error, %Ecto.Changeset{}} = SocialMedia.create_social_account(attrs)
+    end
+
+    test "create_social_account/1 without required fields returns error", %{festival: festival} do
+      attrs = %{festival_id: festival.id}
+      assert {:error, %Ecto.Changeset{}} = SocialMedia.create_social_account(attrs)
+    end
+
+    test "update_social_account/2 with valid data updates the account", %{festival: festival} do
+      account = social_account_fixture(festival)
+      {:ok, updated} = SocialMedia.update_social_account(account, %{account_name: "updated_name"})
+      assert updated.account_name == "updated_name"
+    end
+
+    test "update_social_account/2 with invalid data returns error", %{festival: festival} do
+      account = social_account_fixture(festival)
+      assert {:error, %Ecto.Changeset{}} = SocialMedia.update_social_account(account, %{platform: "invalid"})
+    end
+
+    test "delete_social_account/1 deletes the account", %{festival: festival} do
+      account = social_account_fixture(festival)
+      assert {:ok, %SocialAccount{}} = SocialMedia.delete_social_account(account)
+      assert_raise Ecto.NoResultsError, fn -> SocialMedia.get_social_account!(account.id) end
+    end
+
+    test "change_social_account/2 returns a changeset", %{festival: festival} do
+      account = social_account_fixture(festival)
+      assert %Ecto.Changeset{} = SocialMedia.change_social_account(account)
+    end
+
+    test "change_social_account/2 with attrs returns a changeset", %{festival: festival} do
+      account = social_account_fixture(festival)
+      changeset = SocialMedia.change_social_account(account, %{account_name: "new"})
+      assert %Ecto.Changeset{} = changeset
     end
   end
 
@@ -89,10 +145,44 @@ defmodule MatsuriOps.SocialMediaTest do
 
     test "list_posts_by_status/2 filters by status", %{festival: festival, user: user} do
       social_post_fixture(festival, user)
-      draft = social_post_fixture(festival, user, %{content: "下書き"})
+      social_post_fixture(festival, user, %{content: "下書き"})
 
       drafts = SocialMedia.list_posts_by_status(festival.id, "draft")
       assert length(drafts) == 2
+    end
+
+    test "list_scheduled_posts/1 returns only scheduled posts", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      scheduled_at = DateTime.utc_now() |> DateTime.add(3600, :second)
+      {:ok, _} = SocialMedia.schedule_post(post, scheduled_at)
+
+      _draft = social_post_fixture(festival, user, %{content: "下書き投稿"})
+
+      scheduled = SocialMedia.list_scheduled_posts(festival.id)
+      assert length(scheduled) == 1
+      assert hd(scheduled).status == "scheduled"
+    end
+
+    test "list_pending_scheduled_posts/0 returns posts past their scheduled time", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      # Schedule in the past
+      past_time = DateTime.utc_now() |> DateTime.add(-3600, :second)
+      {:ok, _} = SocialMedia.schedule_post(post, past_time)
+
+      pending = SocialMedia.list_pending_scheduled_posts()
+      assert length(pending) >= 1
+    end
+
+    test "get_social_post!/1 returns the post", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      found = SocialMedia.get_social_post!(post.id)
+      assert found.id == post.id
+    end
+
+    test "get_social_post!/1 raises for non-existent id" do
+      assert_raise Ecto.NoResultsError, fn ->
+        SocialMedia.get_social_post!(999_999)
+      end
     end
 
     test "create_social_post/1 with valid data creates a post and extracts hashtags", %{festival: festival, user: user} do
@@ -116,6 +206,46 @@ defmodule MatsuriOps.SocialMediaTest do
         |> Map.put(:content, long_content)
 
       assert {:error, %Ecto.Changeset{}} = SocialMedia.create_social_post(attrs)
+    end
+
+    test "create_social_post/1 with invalid platforms returns error", %{festival: festival, user: user} do
+      attrs =
+        @valid_attrs
+        |> Map.put(:festival_id, festival.id)
+        |> Map.put(:created_by_id, user.id)
+        |> Map.put(:platforms, ["invalid_platform"])
+
+      assert {:error, %Ecto.Changeset{}} = SocialMedia.create_social_post(attrs)
+    end
+
+    test "update_social_post/2 updates content and re-extracts hashtags", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      {:ok, updated} = SocialMedia.update_social_post(post, %{content: "更新 #新タグ #テスト"})
+      assert updated.content == "更新 #新タグ #テスト"
+      assert "#新タグ" in updated.hashtags
+      assert "#テスト" in updated.hashtags
+    end
+
+    test "update_social_post/2 with invalid data returns error", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      assert {:error, %Ecto.Changeset{}} = SocialMedia.update_social_post(post, %{content: nil})
+    end
+
+    test "delete_social_post/1 deletes the post", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      assert {:ok, %SocialPost{}} = SocialMedia.delete_social_post(post)
+      assert_raise Ecto.NoResultsError, fn -> SocialMedia.get_social_post!(post.id) end
+    end
+
+    test "change_social_post/2 returns a changeset", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      assert %Ecto.Changeset{} = SocialMedia.change_social_post(post)
+    end
+
+    test "change_social_post/2 with attrs returns a changeset", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      changeset = SocialMedia.change_social_post(post, %{content: "変更"})
+      assert %Ecto.Changeset{} = changeset
     end
 
     test "schedule_post/2 schedules a post", %{festival: festival, user: user} do
@@ -145,6 +275,17 @@ defmodule MatsuriOps.SocialMediaTest do
       assert failed.error_message == "API error"
     end
 
+    test "update_analytics/2 updates analytics data", %{festival: festival, user: user} do
+      post = social_post_fixture(festival, user)
+      analytics = %{likes: 10, shares: 5, comments: 3, reach: 100}
+
+      {:ok, updated} = SocialMedia.update_analytics(post, analytics)
+      assert updated.likes_count == 10
+      assert updated.shares_count == 5
+      assert updated.comments_count == 3
+      assert updated.reach_count == 100
+    end
+
     test "duplicate_post/1 creates a copy as draft", %{festival: festival, user: user} do
       post = social_post_fixture(festival, user)
       {:ok, posted} = SocialMedia.mark_as_posted(post, %{})
@@ -168,6 +309,29 @@ defmodule MatsuriOps.SocialMediaTest do
       assert stats.posted_count == 1
     end
 
+    test "get_statistics/1 includes connected accounts count", %{festival: festival, user: user} do
+      # Create an account
+      SocialMedia.create_social_account(%{
+        platform: "twitter",
+        account_name: "test",
+        festival_id: festival.id,
+        is_active: true
+      })
+
+      social_post_fixture(festival, user)
+
+      stats = SocialMedia.get_statistics(festival.id)
+      assert stats.connected_accounts == 1
+    end
+
+    test "get_statistics/1 returns zeros for empty festival" do
+      festival = festival_fixture(%{name: "空の祭り"})
+      stats = SocialMedia.get_statistics(festival.id)
+      assert stats.total_posts == 0
+      assert stats.posted_count == 0
+      assert stats.connected_accounts == 0
+    end
+
     test "popular_hashtags/2 returns hashtags sorted by frequency", %{festival: festival, user: user} do
       social_post_fixture(festival, user, %{content: "投稿 #祭り #塩尻"})
       social_post_fixture(festival, user, %{content: "投稿2 #祭り"})
@@ -175,12 +339,19 @@ defmodule MatsuriOps.SocialMediaTest do
 
       hashtags = SocialMedia.popular_hashtags(festival.id, 10)
       assert length(hashtags) == 3
-      # 最も多い#祭りが最初に来る
       assert hd(hashtags) == {"#祭り", 3}
-      # 他のハッシュタグは1回ずつ
       other_hashtags = Enum.map(tl(hashtags), fn {tag, _count} -> tag end)
       assert "#塩尻" in other_hashtags
       assert "#イベント" in other_hashtags
+    end
+
+    test "popular_hashtags/2 with limit restricts results", %{festival: festival, user: user} do
+      social_post_fixture(festival, user, %{content: "#a #b #c"})
+      social_post_fixture(festival, user, %{content: "#a #b"})
+      social_post_fixture(festival, user, %{content: "#a"})
+
+      hashtags = SocialMedia.popular_hashtags(festival.id, 1)
+      assert length(hashtags) == 1
     end
   end
 
@@ -195,15 +366,66 @@ defmodule MatsuriOps.SocialMediaTest do
       assert length(hashtags) == 3
     end
 
+    test "extract_hashtags/1 returns empty list for nil" do
+      assert SocialPost.extract_hashtags(nil) == []
+    end
+
+    test "extract_hashtags/1 returns empty list for content without hashtags" do
+      assert SocialPost.extract_hashtags("no hashtags here") == []
+    end
+
+    test "extract_hashtags/1 deduplicates hashtags" do
+      content = "#祭り #祭り #祭り"
+      hashtags = SocialPost.extract_hashtags(content)
+      assert length(hashtags) == 1
+    end
+
     test "character_count/2 returns correct count for twitter" do
       content = "Hello World!"
       assert SocialPost.character_count(content, "twitter") == 12
+    end
+
+    test "character_count/2 returns correct count for instagram" do
+      content = "テスト"
+      assert SocialPost.character_count(content, "instagram") == 3
+    end
+
+    test "character_count/2 handles nil content" do
+      assert SocialPost.character_count(nil, "twitter") == 0
     end
 
     test "character_limit/1 returns correct limit for each platform" do
       assert SocialPost.character_limit("twitter") == 280
       assert SocialPost.character_limit("instagram") == 2200
       assert SocialPost.character_limit("facebook") == 63206
+    end
+
+    test "character_limit/1 returns default for unknown platform" do
+      assert SocialPost.character_limit("unknown") == 1000
+    end
+
+    test "available_platforms/0 returns platform list" do
+      platforms = SocialPost.available_platforms()
+      assert "twitter" in platforms
+      assert "instagram" in platforms
+      assert "facebook" in platforms
+    end
+
+    test "statuses/0 returns status list" do
+      statuses = SocialPost.statuses()
+      assert "draft" in statuses
+      assert "scheduled" in statuses
+      assert "posted" in statuses
+      assert "failed" in statuses
+    end
+
+    test "status_label/1 returns correct labels" do
+      assert SocialPost.status_label("draft") == "下書き"
+      assert SocialPost.status_label("scheduled") == "予約済"
+      assert SocialPost.status_label("posting") == "投稿中"
+      assert SocialPost.status_label("posted") == "投稿済"
+      assert SocialPost.status_label("failed") == "失敗"
+      assert SocialPost.status_label("unknown") == "不明"
     end
   end
 

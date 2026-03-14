@@ -59,7 +59,7 @@ defmodule MatsuriOpsWeb.AnnouncementLive.Index do
     {:noreply,
      socket
      |> assign(:has_announcements, true)
-     |> stream_insert(socket, :announcements, announcement)}
+     |> stream_insert(:announcements, announcement)}
   end
 
   def handle_info({:new_announcement, announcement}, socket) do

@@ -24,9 +24,49 @@ defmodule MatsuriOps.ErrorTest do
       assert is_map(errors)
     end
 
+    test "handles {:error, changeset} tuples" do
+      changeset = %Ecto.Changeset{
+        errors: [name: {"は必須です", [validation: :required]}],
+        valid?: false
+      }
+
+      assert {:error, :validation, errors} = Error.handle_error({:error, changeset})
+      assert is_map(errors)
+    end
+
     test "handles {:error, atom} tuples" do
       assert {:error, :not_found, msg} = Error.handle_error({:error, :not_found})
       assert msg =~ "見つかりません"
+    end
+
+    test "handles {:error, :unauthorized}" do
+      assert {:error, :unauthorized, msg} = Error.handle_error({:error, :unauthorized})
+      assert msg =~ "認証"
+    end
+
+    test "handles {:error, :forbidden}" do
+      assert {:error, :forbidden, msg} = Error.handle_error({:error, :forbidden})
+      assert msg =~ "権限"
+    end
+
+    test "handles {:error, :conflict}" do
+      assert {:error, :conflict, msg} = Error.handle_error({:error, :conflict})
+      assert msg =~ "競合"
+    end
+
+    test "handles {:error, :timeout}" do
+      assert {:error, :timeout, msg} = Error.handle_error({:error, :timeout})
+      assert msg =~ "タイムアウト"
+    end
+
+    test "handles {:error, :overlap}" do
+      assert {:error, :overlap, msg} = Error.handle_error({:error, :overlap})
+      assert msg =~ "重複"
+    end
+
+    test "handles {:error, unknown_atom}" do
+      assert {:error, :custom_error, msg} = Error.handle_error({:error, :custom_error})
+      assert msg =~ "custom_error"
     end
 
     test "handles {:error, string} tuples" do
@@ -36,6 +76,11 @@ defmodule MatsuriOps.ErrorTest do
     test "handles unknown errors" do
       assert {:error, :internal, msg} = Error.handle_error("unknown error")
       assert msg =~ "予期しないエラー"
+    end
+
+    test "handles error with context" do
+      error = %Ecto.NoResultsError{message: "no results"}
+      assert {:error, :not_found, _msg} = Error.handle_error(error, %{module: "test"})
     end
   end
 
@@ -51,6 +96,20 @@ defmodule MatsuriOps.ErrorTest do
       errors = Error.format_changeset_errors(changeset)
       assert %{name: [msg]} = errors
       assert msg =~ "3"
+    end
+
+    test "formats multiple errors" do
+      changeset = %Ecto.Changeset{
+        errors: [
+          name: {"は必須です", [validation: :required]},
+          email: {"は有効な形式ではありません", [validation: :format]}
+        ],
+        valid?: false
+      }
+
+      errors = Error.format_changeset_errors(changeset)
+      assert Map.has_key?(errors, :name)
+      assert Map.has_key?(errors, :email)
     end
   end
 
@@ -69,6 +128,15 @@ defmodule MatsuriOps.ErrorTest do
 
     test "catches exceptions" do
       assert {:error, :internal, _} = Error.wrap_error(fn -> raise "boom" end)
+    end
+
+    test "wraps error with context" do
+      assert {:error, :not_found, _} = Error.wrap_error(fn -> {:error, :not_found} end, %{action: "test"})
+    end
+
+    test "catches exit signals" do
+      result = Error.wrap_error(fn -> exit(:shutdown) end)
+      assert {:error, _, _} = result
     end
   end
 end

@@ -143,16 +143,16 @@ defmodule MatsuriOpsWeb.Router do
       # Gallery routes
       live "/festivals/:festival_id/gallery", GalleryLive.Index, :index
       live "/festivals/:festival_id/gallery/new", GalleryLive.Index, :new
+      live "/festivals/:festival_id/gallery/moderation", GalleryLive.Moderation, :moderation
       live "/festivals/:festival_id/gallery/:id/edit", GalleryLive.Index, :edit
       live "/festivals/:festival_id/gallery/:id", GalleryLive.Show, :show
-      live "/festivals/:festival_id/gallery/moderation", GalleryLive.Moderation, :moderation
 
       # Social Media routes
       live "/festivals/:festival_id/social", SocialMediaLive.Index, :index
       live "/festivals/:festival_id/social/new", SocialMediaLive.Index, :new
+      live "/festivals/:festival_id/social/accounts", SocialMediaLive.Accounts, :accounts
       live "/festivals/:festival_id/social/:id/edit", SocialMediaLive.Index, :edit
       live "/festivals/:festival_id/social/:id", SocialMediaLive.Show, :show
-      live "/festivals/:festival_id/social/accounts", SocialMediaLive.Accounts, :accounts
 
       # Template routes
       live "/templates", TemplateLive.Index, :index

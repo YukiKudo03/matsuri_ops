@@ -1,5 +1,5 @@
 defmodule MatsuriOps.GalleryTest do
-  use MatsuriOps.DataCase
+  use MatsuriOps.DataCase, async: true
 
   alias MatsuriOps.Gallery
   alias MatsuriOps.Gallery.GalleryImage
@@ -54,7 +54,7 @@ defmodule MatsuriOps.GalleryTest do
     end
 
     test "list_pending_images/1 returns only pending images", %{festival: festival} do
-      pending = gallery_image_fixture(festival)
+      _pending = gallery_image_fixture(festival)
       _other = gallery_image_fixture(festival, %{title: "別の画像"})
 
       pending_images = Gallery.list_pending_images(festival.id)
@@ -71,10 +71,43 @@ defmodule MatsuriOps.GalleryTest do
       assert length(featured) == 1
     end
 
+    test "list_images_by_status/2 returns images filtered by status", %{festival: festival, user: user} do
+      _pending = gallery_image_fixture(festival)
+      approved_img = gallery_image_fixture(festival, %{title: "承認画像"})
+      {:ok, _} = Gallery.approve_image(approved_img, user.id)
+
+      pending_images = Gallery.list_images_by_status(festival.id, "pending")
+      assert length(pending_images) == 1
+      assert hd(pending_images).status == "pending"
+
+      approved_images = Gallery.list_images_by_status(festival.id, "approved")
+      assert length(approved_images) == 1
+      assert hd(approved_images).status == "approved"
+
+      rejected_images = Gallery.list_images_by_status(festival.id, "rejected")
+      assert Enum.empty?(rejected_images)
+    end
+
     test "get_gallery_image!/1 returns the gallery_image with given id", %{festival: festival} do
       gallery_image = gallery_image_fixture(festival)
       found = Gallery.get_gallery_image!(gallery_image.id)
       assert found.id == gallery_image.id
+    end
+
+    test "get_gallery_image!/1 raises for non-existent id", %{festival: _festival} do
+      assert_raise Ecto.NoResultsError, fn ->
+        Gallery.get_gallery_image!(999_999)
+      end
+    end
+
+    test "get_gallery_image/1 returns the gallery_image with given id", %{festival: festival} do
+      gallery_image = gallery_image_fixture(festival)
+      found = Gallery.get_gallery_image(gallery_image.id)
+      assert found.id == gallery_image.id
+    end
+
+    test "get_gallery_image/1 returns nil for non-existent id", %{festival: _festival} do
+      assert Gallery.get_gallery_image(999_999) == nil
     end
 
     test "create_gallery_image/1 with valid data creates a gallery_image", %{festival: festival} do
@@ -108,10 +141,27 @@ defmodule MatsuriOps.GalleryTest do
       assert updated.description == "更新された説明"
     end
 
+    test "update_gallery_image/2 with invalid data returns error changeset", %{festival: festival} do
+      gallery_image = gallery_image_fixture(festival)
+      assert {:error, %Ecto.Changeset{}} = Gallery.update_gallery_image(gallery_image, %{image_url: "bad"})
+    end
+
     test "delete_gallery_image/1 deletes the gallery_image", %{festival: festival} do
       gallery_image = gallery_image_fixture(festival)
       assert {:ok, %GalleryImage{}} = Gallery.delete_gallery_image(gallery_image)
       assert_raise Ecto.NoResultsError, fn -> Gallery.get_gallery_image!(gallery_image.id) end
+    end
+
+    test "change_gallery_image/2 returns a changeset", %{festival: festival} do
+      gallery_image = gallery_image_fixture(festival)
+      assert %Ecto.Changeset{} = Gallery.change_gallery_image(gallery_image)
+    end
+
+    test "change_gallery_image/2 with attrs returns a changeset", %{festival: festival} do
+      gallery_image = gallery_image_fixture(festival)
+      changeset = Gallery.change_gallery_image(gallery_image, %{title: "新しいタイトル"})
+      assert %Ecto.Changeset{} = changeset
+      assert Ecto.Changeset.get_change(changeset, :title) == "新しいタイトル"
     end
 
     test "approve_image/2 changes status to approved and sets approver", %{festival: festival, user: user} do
@@ -169,6 +219,18 @@ defmodule MatsuriOps.GalleryTest do
       assert stats.approved_count == 1
     end
 
+    test "get_statistics/1 returns zero counts for empty festival" do
+      festival = festival_fixture(%{name: "空の祭り"})
+      stats = Gallery.get_statistics(festival.id)
+      assert stats.total_count == 0
+      assert stats.pending_count == 0
+      assert stats.approved_count == 0
+      assert stats.rejected_count == 0
+      assert stats.featured_count == 0
+      assert stats.total_views == 0
+      assert stats.total_likes == 0
+    end
+
     test "approve_all_pending/2 approves all pending images", %{festival: festival, user: user} do
       gallery_image_fixture(festival)
       gallery_image_fixture(festival, %{title: "画像2"})
@@ -181,11 +243,15 @@ defmodule MatsuriOps.GalleryTest do
       assert length(pending) == 0
     end
 
+    test "approve_all_pending/2 returns 0 when no pending images", %{festival: festival, user: user} do
+      {count, _} = Gallery.approve_all_pending(festival.id, user.id)
+      assert count == 0
+    end
+
     test "list_popular_images/2 returns images sorted by likes", %{festival: festival, user: user} do
       image1 = gallery_image_fixture(festival)
       image2 = gallery_image_fixture(festival, %{title: "人気画像"})
 
-      # 画像2を承認してから、いいねを追加（返り値を使って連続インクリメント）
       {:ok, approved2} = Gallery.approve_image(image2, user.id)
       {:ok, approved2} = Gallery.increment_like_count(approved2)
       {:ok, _approved2} = Gallery.increment_like_count(approved2)
@@ -196,6 +262,45 @@ defmodule MatsuriOps.GalleryTest do
       popular = Gallery.list_popular_images(festival.id, 10)
       assert length(popular) == 2
       assert hd(popular).title == "人気画像"
+    end
+
+    test "list_popular_images/2 with limit restricts results", %{festival: festival, user: user} do
+      for i <- 1..5 do
+        img = gallery_image_fixture(festival, %{title: "画像#{i}"})
+        {:ok, approved} = Gallery.approve_image(img, user.id)
+        Gallery.increment_like_count(approved)
+      end
+
+      popular = Gallery.list_popular_images(festival.id, 3)
+      assert length(popular) == 3
+    end
+
+    test "list_recent_images/2 returns recently approved images", %{festival: festival, user: user} do
+      image1 = gallery_image_fixture(festival)
+      image2 = gallery_image_fixture(festival, %{title: "最近の画像"})
+
+      {:ok, _} = Gallery.approve_image(image1, user.id)
+      {:ok, _} = Gallery.approve_image(image2, user.id)
+
+      recent = Gallery.list_recent_images(festival.id, 10)
+      assert length(recent) == 2
+    end
+
+    test "list_recent_images/2 does not return pending images", %{festival: festival} do
+      _pending = gallery_image_fixture(festival)
+
+      recent = Gallery.list_recent_images(festival.id, 10)
+      assert Enum.empty?(recent)
+    end
+
+    test "list_recent_images/2 with limit restricts results", %{festival: festival, user: user} do
+      for i <- 1..5 do
+        img = gallery_image_fixture(festival, %{title: "画像#{i}"})
+        Gallery.approve_image(img, user.id)
+      end
+
+      recent = Gallery.list_recent_images(festival.id, 2)
+      assert length(recent) == 2
     end
   end
 
